@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { execFile } from "child_process";
+import { readFile } from "fs/promises";
 import path from "path";
 import cors from "cors";
 
@@ -11,10 +12,20 @@ const projectRoot = path.resolve(__dirname, "../..");
 app.use(cors());
 app.use(express.json());
 
+
+// -------------------------
+// STATIC RESULTS
+// -------------------------
+
 app.use(
   "/results",
   express.static(path.join(projectRoot, "results"))
 );
+
+
+// -------------------------
+// ROOT
+// -------------------------
 
 app.get("/", (req: Request, res: Response) => {
   res.json({
@@ -23,12 +34,22 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
+
+// -------------------------
+// HEALTH CHECK
+// -------------------------
+
 app.get("/api/health", (req: Request, res: Response) => {
   res.json({
     status: "ok",
     service: "ocean-detective-backend"
   });
 });
+
+
+// -------------------------
+// RUN SATELLITE ANALYSIS
+// -------------------------
 
 app.post("/api/analyze", (req: Request, res: Response) => {
   const scriptPath = path.join(
@@ -42,8 +63,9 @@ app.post("/api/analyze", (req: Request, res: Response) => {
     "python3",
     [scriptPath],
     { cwd: projectRoot },
-    (error, stdout, stderr) => {
+    async (error, stdout, stderr) => {
       if (error) {
+        console.error("Python analysis error:");
         console.error(stderr);
 
         return res.status(500).json({
@@ -52,14 +74,55 @@ app.post("/api/analyze", (req: Request, res: Response) => {
         });
       }
 
-      return res.json({
-        status: "success",
-        message: "Satellite image analysis completed",
-        output: stdout
-      });
+      try {
+        // -------------------------
+        // READ PYTHON ANALYSIS JSON
+        // -------------------------
+
+        const analysisPath = path.join(
+          projectRoot,
+          "results",
+          "analysis.json"
+        );
+
+        const analysisFile = await readFile(
+          analysisPath,
+          "utf-8"
+        );
+
+        const analysis = JSON.parse(analysisFile);
+
+        // -------------------------
+        // RETURN RESULT TO FRONTEND
+        // -------------------------
+
+        return res.json({
+          status: "success",
+          message: "Satellite image analysis completed",
+          analysis,
+          output: stdout
+        });
+
+      } catch (readError) {
+        console.error(
+          "Unable to read analysis.json:",
+          readError
+        );
+
+        return res.status(500).json({
+          status: "error",
+          message:
+            "Analysis completed, but statistics could not be loaded"
+        });
+      }
     }
   );
 });
+
+
+// -------------------------
+// START SERVER
+// -------------------------
 
 app.listen(PORT, () => {
   console.log(
