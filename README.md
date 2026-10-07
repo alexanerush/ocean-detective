@@ -62,7 +62,7 @@ random_state:     42
 n_jobs:           -1
 ```
 
-The only experimental variable is the input feature set.
+The primary controlled difference between the two baseline models is the input feature set.
 
 ### RGB model
 
