@@ -54,3 +54,10 @@ data/*
 !data/.gitkeep
 # Trained ML models
 ml/models/
+# Generated prediction visualizations
+results/validation_rgb_image.png
+results/validation_ground_truth.png
+results/validation_rgb_prediction.png
+results/validation_multispectral_prediction.png
+results/validation_rgb_error.png
+results/validation_multispectral_error.png
