@@ -52,3 +52,5 @@ venv/
 data/*
 !data/README.md
 !data/.gitkeep
+# Trained ML models
+ml/models/

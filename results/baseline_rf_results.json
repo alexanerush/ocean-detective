@@ -1,0 +1,60 @@
+{
+  "experiment": "RGB vs multispectral Random Forest",
+  "dataset": "MARIDA",
+  "split": {
+    "train_patches": 694,
+    "validation_patches": 328,
+    "test_patches": 359,
+    "test_used": false
+  },
+  "features": {
+    "rgb": [
+      "B02",
+      "B03",
+      "B04"
+    ],
+    "multispectral": [
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08",
+      "B8A",
+      "B11",
+      "B12"
+    ]
+  },
+  "random_forest": {
+    "n_estimators": 100,
+    "max_depth": 20,
+    "min_samples_leaf": 2,
+    "class_weight": "balanced",
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "validation": {
+    "rgb": {
+      "precision": 0.10124610591900311,
+      "recall": 0.12093023255813953,
+      "f1": 0.11021619330224672,
+      "iou": 0.05832211754149843,
+      "true_positive": 130,
+      "false_positive": 1154,
+      "false_negative": 945,
+      "training_seconds": 9.01452898979187
+    },
+    "multispectral": {
+      "precision": 0.8046471600688468,
+      "recall": 0.8697674418604651,
+      "f1": 0.8359409924005364,
+      "iou": 0.7181259600614439,
+      "true_positive": 935,
+      "false_positive": 227,
+      "false_negative": 140,
+      "training_seconds": 16.855019092559814
+    }
+  }
+}
