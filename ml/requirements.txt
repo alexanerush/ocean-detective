@@ -1,3 +1,5 @@
 rasterio
 numpy
 matplotlib
+scikit-learn
+joblib

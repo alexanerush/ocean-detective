@@ -21,7 +21,10 @@ RESULTS_DIR = PROJECT_ROOT / "results"
 
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-RGB_MODEL_PATH = MODELS_DIR / "random_forest_rgb.joblib"
+RGB_MODEL_PATH = (
+    MODELS_DIR / "random_forest_rgb.joblib"
+)
+
 MULTISPECTRAL_MODEL_PATH = (
     MODELS_DIR / "random_forest_multispectral.joblib"
 )
@@ -34,13 +37,17 @@ RGB_INDICES = [1, 2, 3]
 
 MARINE_DEBRIS_CLASS = 1
 
+# MARIDA class 0 is not a semantic class.
+# It represents an unannotated region and must therefore
+# be excluded from quantitative evaluation.
+UNANNOTATED_CLASS = 0
+
 
 # =========================================================
 # Paths
 # =========================================================
 
 def get_patch_paths(patch_id: str):
-
     date, tile, number = patch_id.split("_")
 
     folder = (
@@ -70,7 +77,6 @@ def get_patch_paths(patch_id: str):
 # =========================================================
 
 def load_patch(patch_id: str):
-
     image_path, class_path = (
         get_patch_paths(patch_id)
     )
@@ -92,7 +98,6 @@ def load_patch(patch_id: str):
 # =========================================================
 
 def create_rgb_image(image):
-
     # Sentinel-2 true-color:
     # B04 = Red
     # B03 = Green
@@ -117,7 +122,6 @@ def create_rgb_image(image):
 
     # Contrast stretch for display only
     for channel in range(3):
-
         band = rgb[:, :, channel]
 
         low = np.percentile(
@@ -162,7 +166,6 @@ def predict_patch(
     image,
     feature_indices
 ):
-
     height = image.shape[1]
     width = image.shape[2]
 
@@ -197,6 +200,24 @@ def predict_patch(
 
 
 # =========================================================
+# Valid evaluation mask
+# =========================================================
+
+def create_valid_mask(ground_truth):
+    """
+    MARIDA class 0 represents an unannotated region.
+
+    Only pixels with a semantic ground-truth class (> 0)
+    are valid for quantitative evaluation.
+    """
+
+    return (
+        ground_truth
+        != UNANNOTATED_CLASS
+    )
+
+
+# =========================================================
 # Error map
 # =========================================================
 
@@ -204,6 +225,11 @@ def create_error_map(
     ground_truth,
     prediction
 ):
+    valid_mask = (
+        create_valid_mask(
+            ground_truth
+        )
+    )
 
     gt_debris = (
         ground_truth
@@ -220,21 +246,39 @@ def create_error_map(
         dtype=np.uint8
     )
 
-    # 0 = background
+    # 0 = background / unannotated / correct non-debris
     # 1 = True Positive
     # 2 = False Positive
     # 3 = False Negative
 
+    true_positive = (
+        valid_mask
+        & gt_debris
+        & pred_debris
+    )
+
+    false_positive = (
+        valid_mask
+        & ~gt_debris
+        & pred_debris
+    )
+
+    false_negative = (
+        valid_mask
+        & gt_debris
+        & ~pred_debris
+    )
+
     error_map[
-        gt_debris & pred_debris
+        true_positive
     ] = 1
 
     error_map[
-        ~gt_debris & pred_debris
+        false_positive
     ] = 2
 
     error_map[
-        gt_debris & ~pred_debris
+        false_negative
     ] = 3
 
     return error_map
@@ -248,27 +292,44 @@ def calculate_patch_metrics(
     ground_truth,
     prediction
 ):
+    valid_mask = (
+        create_valid_mask(
+            ground_truth
+        )
+    )
 
-    gt = (
+    gt_debris = (
         ground_truth
         == MARINE_DEBRIS_CLASS
     )
 
-    pred = (
+    pred_debris = (
         prediction
         == MARINE_DEBRIS_CLASS
     )
 
     tp = int(
-        np.sum(gt & pred)
+        np.sum(
+            valid_mask
+            & gt_debris
+            & pred_debris
+        )
     )
 
     fp = int(
-        np.sum(~gt & pred)
+        np.sum(
+            valid_mask
+            & ~gt_debris
+            & pred_debris
+        )
     )
 
     fn = int(
-        np.sum(gt & ~pred)
+        np.sum(
+            valid_mask
+            & gt_debris
+            & ~pred_debris
+        )
     )
 
     precision = (
@@ -316,7 +377,6 @@ def save_binary_mask(
     path,
     title
 ):
-
     plt.figure(
         figsize=(6, 6)
     )
@@ -350,7 +410,6 @@ def save_error_map(
     path,
     title
 ):
-
     cmap = ListedColormap([
         "black",   # background
         "lime",    # TP
@@ -387,7 +446,6 @@ def save_error_map(
 # =========================================================
 
 def main():
-
     print()
     print("OCEAN DETECTIVE")
     print("Prediction visualization")
@@ -432,11 +490,35 @@ def main():
         image.shape
     )
 
+    valid_mask = (
+        create_valid_mask(
+            ground_truth
+        )
+    )
+
+    valid_pixel_count = int(
+        np.sum(valid_mask)
+    )
+
+    unannotated_pixel_count = int(
+        np.sum(~valid_mask)
+    )
+
     ground_truth_debris_count = int(
         np.sum(
             ground_truth
             == MARINE_DEBRIS_CLASS
         )
+    )
+
+    print(
+        "Annotated evaluation pixels:",
+        valid_pixel_count
+    )
+
+    print(
+        "Unannotated pixels excluded:",
+        unannotated_pixel_count
     )
 
     print(
@@ -478,6 +560,10 @@ def main():
         == MARINE_DEBRIS_CLASS
     )
 
+    # Predictions are generated for the complete patch.
+    # For evaluation visualizations, however, class-0
+    # regions are excluded because they are unannotated.
+
     rgb_debris = (
         rgb_prediction
         == MARINE_DEBRIS_CLASS
@@ -486,6 +572,16 @@ def main():
     ms_debris = (
         multispectral_prediction
         == MARINE_DEBRIS_CLASS
+    )
+
+    rgb_debris_evaluation = (
+        rgb_debris
+        & valid_mask
+    )
+
+    ms_debris_evaluation = (
+        ms_debris
+        & valid_mask
     )
 
     # -----------------------------------------------------
@@ -507,11 +603,14 @@ def main():
     )
 
     print()
-    print("RGB PATCH RESULTS")
+    print(
+        "RGB PATCH RESULTS "
+        "(ANNOTATED PIXELS ONLY)"
+    )
+
     print("-" * 50)
 
     for key, value in rgb_metrics.items():
-
         if isinstance(value, float):
             print(
                 f"{key}: {value:.4f}"
@@ -522,13 +621,15 @@ def main():
             )
 
     print()
+
     print(
-        "MULTISPECTRAL PATCH RESULTS"
+        "MULTISPECTRAL PATCH RESULTS "
+        "(ANNOTATED PIXELS ONLY)"
     )
+
     print("-" * 50)
 
     for key, value in ms_metrics.items():
-
         if isinstance(value, float):
             print(
                 f"{key}: {value:.4f}"
@@ -569,7 +670,9 @@ def main():
         figsize=(6, 6)
     )
 
-    plt.imshow(rgb_display)
+    plt.imshow(
+        rgb_display
+    )
 
     plt.title(
         f"Sentinel-2 RGB — {PATCH_ID}"
@@ -591,38 +694,56 @@ def main():
     # -----------------------------------------------------
 
     save_binary_mask(
-        gt_debris.astype(np.uint8),
+        gt_debris.astype(
+            np.uint8
+        ),
         RESULTS_DIR
         / "validation_ground_truth.png",
         "Ground Truth — Marine Debris"
     )
 
     save_binary_mask(
-        rgb_debris.astype(np.uint8),
+        rgb_debris_evaluation.astype(
+            np.uint8
+        ),
         RESULTS_DIR
         / "validation_rgb_prediction.png",
-        "RGB Random Forest Prediction"
+        (
+            "RGB Random Forest Prediction "
+            "— Annotated Pixels"
+        )
     )
 
     save_binary_mask(
-        ms_debris.astype(np.uint8),
+        ms_debris_evaluation.astype(
+            np.uint8
+        ),
         RESULTS_DIR
         / "validation_multispectral_prediction.png",
-        "Multispectral Random Forest Prediction"
+        (
+            "Multispectral Random Forest Prediction "
+            "— Annotated Pixels"
+        )
     )
 
     save_error_map(
         rgb_error,
         RESULTS_DIR
         / "validation_rgb_error.png",
-        "RGB Error Map"
+        (
+            "RGB Error Map "
+            "— Annotated Pixels"
+        )
     )
 
     save_error_map(
         ms_error,
         RESULTS_DIR
         / "validation_multispectral_error.png",
-        "Multispectral Error Map"
+        (
+            "Multispectral Error Map "
+            "— Annotated Pixels"
+        )
     )
 
     # -----------------------------------------------------
@@ -647,11 +768,13 @@ def main():
     # Ground truth
     axes[0, 1].imshow(
         gt_debris,
-        cmap="gray"
+        cmap="gray",
+        vmin=0,
+        vmax=1
     )
 
     axes[0, 1].set_title(
-        "Ground Truth"
+        "Ground Truth — Marine Debris"
     )
 
     # Information
@@ -659,7 +782,7 @@ def main():
 
     axes[0, 2].text(
         0.05,
-        0.82,
+        0.84,
         "Validation comparison",
         fontsize=16,
         weight="bold"
@@ -667,14 +790,14 @@ def main():
 
     axes[0, 2].text(
         0.05,
-        0.65,
+        0.69,
         f"Patch: {PATCH_ID}",
         fontsize=12
     )
 
     axes[0, 2].text(
         0.05,
-        0.53,
+        0.59,
         (
             "Ground-truth debris: "
             f"{ground_truth_debris_count} pixels"
@@ -684,14 +807,34 @@ def main():
 
     axes[0, 2].text(
         0.05,
-        0.30,
+        0.49,
+        (
+            "Annotated evaluation pixels: "
+            f"{valid_pixel_count}"
+        ),
+        fontsize=11
+    )
+
+    axes[0, 2].text(
+        0.05,
+        0.39,
+        (
+            "Class 0 excluded: "
+            f"{unannotated_pixel_count} pixels"
+        ),
+        fontsize=11
+    )
+
+    axes[0, 2].text(
+        0.05,
+        0.20,
         (
             "Error map:\n"
             "Green = True Positive\n"
             "Red = False Positive\n"
             "Yellow = False Negative"
         ),
-        fontsize=11
+        fontsize=10
     )
 
     error_cmap = ListedColormap([
@@ -711,7 +854,7 @@ def main():
 
     axes[1, 0].set_title(
         (
-            "RGB Error Map\n"
+            "RGB Error Map — Annotated Pixels\n"
             f"F1={rgb_metrics['f1']:.3f}, "
             f"IoU={rgb_metrics['iou']:.3f}"
         )
@@ -727,7 +870,8 @@ def main():
 
     axes[1, 1].set_title(
         (
-            "Multispectral Error Map\n"
+            "Multispectral Error Map "
+            "— Annotated Pixels\n"
             f"F1={ms_metrics['f1']:.3f}, "
             f"IoU={ms_metrics['iou']:.3f}"
         )
@@ -735,12 +879,17 @@ def main():
 
     # Multispectral prediction
     axes[1, 2].imshow(
-        ms_debris,
-        cmap="gray"
+        ms_debris_evaluation,
+        cmap="gray",
+        vmin=0,
+        vmax=1
     )
 
     axes[1, 2].set_title(
-        "Multispectral Prediction"
+        (
+            "Multispectral Prediction "
+            "— Annotated Pixels"
+        )
     )
 
     for axis in axes.flat:
@@ -768,7 +917,9 @@ def main():
         bbox_inches="tight"
     )
 
-    plt.close(figure)
+    plt.close(
+        figure
+    )
 
     # -----------------------------------------------------
     # Finished
@@ -776,11 +927,25 @@ def main():
 
     print()
     print("=" * 50)
+
     print(
         "Visualization completed."
     )
 
     print()
+
+    print(
+        "IMPORTANT: patch metrics were calculated "
+        "only on annotated MARIDA pixels (class > 0)."
+    )
+
+    print(
+        "Class 0 regions were excluded from "
+        "TP / FP / FN evaluation."
+    )
+
+    print()
+
     print("Saved:")
     print(comparison_path)
 

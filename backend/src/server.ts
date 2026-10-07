@@ -75,10 +75,6 @@ app.post("/api/analyze", (req: Request, res: Response) => {
       }
 
       try {
-        // -------------------------
-        // READ PYTHON ANALYSIS JSON
-        // -------------------------
-
         const analysisPath = path.join(
           projectRoot,
           "results",
@@ -91,10 +87,6 @@ app.post("/api/analyze", (req: Request, res: Response) => {
         );
 
         const analysis = JSON.parse(analysisFile);
-
-        // -------------------------
-        // RETURN RESULT TO FRONTEND
-        // -------------------------
 
         return res.json({
           status: "success",
@@ -118,6 +110,59 @@ app.post("/api/analyze", (req: Request, res: Response) => {
     }
   );
 });
+
+
+// -------------------------
+// MODEL COMPARISON RESULTS
+// -------------------------
+
+app.get(
+  "/api/model-comparison",
+  async (req: Request, res: Response) => {
+    try {
+      const resultsPath = path.join(
+        projectRoot,
+        "results",
+        "baseline_rf_results.json"
+      );
+
+      const resultsFile = await readFile(
+        resultsPath,
+        "utf-8"
+      );
+
+      const experiment = JSON.parse(resultsFile);
+
+      return res.json({
+        status: "success",
+
+        experiment: {
+          name: "RGB vs Multispectral Random Forest",
+          dataset: "MARIDA",
+          split: "validation",
+          target_class: "Marine Debris"
+        },
+
+        results: experiment,
+
+        visualization:
+          "/results/validation_model_comparison.png"
+      });
+
+    } catch (error) {
+      console.error(
+        "Unable to read model comparison results:",
+        error
+      );
+
+      return res.status(500).json({
+        status: "error",
+        message:
+          "Model comparison results could not be loaded"
+      });
+    }
+  }
+);
 
 
 // -------------------------
