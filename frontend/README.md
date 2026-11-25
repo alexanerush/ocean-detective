@@ -513,12 +513,14 @@ The suite covers:
 - Appearance preference persistence.
 - Dashboard accessibility.
 
-Previous verification completed 12 Playwright tests
-successfully across desktop, tablet and mobile
-configurations.
+The latest end-to-end verification completed all
+12 Playwright tests successfully across desktop,
+tablet and mobile configurations.
 
-Final end-to-end re-verification after the latest
-integration remains pending.
+Execution time: 9.9 seconds.
+
+All 27 automated tests passed after full-stack
+integration.
 
 ## Accessibility
 
@@ -602,7 +604,7 @@ available in [QUALITY-README.md](QUALITY-README.md).
 | Loading states | Async state and shared controls | Implemented |
 | Three key component tests | AuthForm, ImageUpload, ImageComparison | Passed |
 | Unit and integration testing | tests/ | 15/15 passed |
-| End-to-end testing | e2e/ui.spec.ts | Implemented |
+| End-to-end testing | e2e/ui.spec.ts | 12/12 passed |
 | Client-side routing | AppRouter.tsx | Implemented |
 | Global state management | Redux Toolkit | Implemented |
 | Local state management | React hooks | Implemented |
