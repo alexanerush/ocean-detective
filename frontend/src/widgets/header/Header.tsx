@@ -6,12 +6,9 @@ export default function Header() {
 
         <h1>Ocean Detective</h1>
 
-        <p>Detection and analysis of marine debris using Sentinel-2 satellite imagery.</p>
-      </div>
-
-      <div className="status">
-        <span className="status-dot" aria-hidden="true" />
-        Frontend ready
+        <p>
+          Detection and analysis of marine debris using Sentinel-2 satellite imagery.
+        </p>
       </div>
     </header>
   );

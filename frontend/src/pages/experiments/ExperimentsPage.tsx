@@ -15,6 +15,10 @@ const metrics = [
   'f1',
   'iou',
 ] as const satisfies readonly (keyof ModelMetrics)[];
+function formatMetric(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(4);
+}
+
 export default function ExperimentsPage() {
   const [data, setData] = useState<ModelComparisonResponse | null>(null);
   const [error, setError] = useState('');
@@ -100,8 +104,8 @@ export default function ExperimentsPage() {
                   ).map((m) => (
                     <tr key={m}>
                       <th scope="row">{m.replaceAll('_', ' ')}</th>
-                      <td>{data.results.validation.rgb[m]}</td>
-                      <td>{data.results.validation.multispectral[m]}</td>
+                      <td>{formatMetric(data.results.validation.rgb[m])}</td>
+                      <td>{formatMetric(data.results.validation.multispectral[m])}</td>
                     </tr>
                   ))}
                 </tbody>

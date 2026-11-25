@@ -389,3 +389,112 @@ Validate the API specification:
 
     cd backend
     npm run docs:validate
+
+## Adaptive UI and Design System
+
+Ocean Detective provides a responsive interface designed for desktop,
+tablet and mobile devices, with consistent visual styling and accessible
+interaction patterns.
+
+### Responsive Interface
+
+- Responsive layouts for desktop, tablet and mobile devices.
+- Portrait and landscape layout support.
+- Adaptive navigation and flexible content grids.
+- Light, dark and system theme preferences.
+- Adjustable interface text scale: 100%, 112.5% and 125%.
+- Minimum 44 px interaction targets for primary controls.
+- Visible keyboard focus indicators.
+- Reduced-motion preference support.
+- Accessible form labels and validation feedback.
+- Horizontally scrollable containers for wide scientific tables.
+- Manual browser zoom verification at 200%.
+
+### Design System and Mockups
+
+The interface uses shared CSS design tokens and reusable React components
+for consistent colors, typography, spacing, controls and feedback states.
+
+Six editable SVG dashboard mockups cover three device sizes in both
+light and dark themes. A separate visual UI kit documents the shared
+design language and component states.
+
+- [Design System Documentation](docs/adaptive-ui/DESIGN-SYSTEM.md)
+- [Figma Design File](https://www.figma.com/design/jFATdDOXIBd4FkuB5qYCY5/Ocean-Detective-Adaptive-UI?node-id=0-1)
+- [Editable SVG Mockups](docs/adaptive-ui/mockups/)
+- [Visual UI Kit](docs/adaptive-ui/mockups/ui-kit.svg)
+
+Functional reusable components are implemented in React.
+The Figma file contains visual component examples rather than native
+Figma component variants.
+
+### Interface Screenshots
+
+The repository contains 52 screenshots documenting responsive layouts,
+theme variations, authenticated workflows and browser zoom behavior.
+
+| Category | Screenshots |
+| --- | ---: |
+| Public pages — light theme | 15 |
+| Public pages — dark theme | 15 |
+| Authenticated pages — both themes | 18 |
+| Manual browser zoom verification | 4 |
+| Total | 52 |
+
+Public screenshots cover Dashboard, Satellite Analysis, ML Experiments,
+Sign In and Create Account.
+
+Authenticated screenshots cover Account, Analysis History and real
+ML analysis results using a dedicated demonstration account.
+
+- [Light Theme Screenshots](docs/adaptive-ui/screenshots/)
+- [Dark Theme Screenshots](docs/adaptive-ui/screenshots/dark/)
+- [Authenticated Screenshots](docs/adaptive-ui/screenshots/authenticated/)
+- [200% Browser Zoom Evidence](docs/adaptive-ui/screenshots/zoom-200/)
+
+### Responsive Quality Assurance
+
+The adaptive UI milestone was verified using Vitest and Playwright.
+
+| Verification | Result |
+| --- | ---: |
+| Unit and integration tests | 15 passed |
+| End-to-end tests | 62 passed |
+| Intentionally skipped duplicate scenarios | 10 |
+| Total passed tests | 77 |
+
+Responsive checks cover multiple viewport sizes, navigation,
+touch-target dimensions and selected color contrast requirements.
+
+Manual browser zoom verification was performed at 200% on Dashboard,
+Satellite Analysis and ML Experiments.
+
+The accessibility implementation follows selected WCAG 2.1 AA
+requirements. These checks do not constitute a complete WCAG
+conformance audit.
+
+### Reproducing the Visual Documentation
+
+With the frontend and backend running locally:
+
+```bash
+cd frontend
+
+npm run build
+npm test
+npm run test:e2e
+
+node scripts/capture-adaptive.mjs
+node scripts/capture-adaptive-dark.mjs
+node scripts/capture-authenticated.mjs
+
+python3 scripts/generate-mockups.py
+```
+
+Authenticated screenshot generation requires a configured database,
+the local MARIDA sample and the trained multispectral model.
+It creates a demonstration account, uploads a GeoTIFF and runs real
+ML inference. Generated credentials and session data are not written
+to the repository.
+
+The 200% browser zoom screenshots were captured manually.

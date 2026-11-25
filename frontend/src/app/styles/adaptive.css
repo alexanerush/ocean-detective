@@ -1,0 +1,254 @@
+/* Adaptive UI milestone: responsive layout and touch accessibility. */
+
+.od-layout {
+  grid-template-columns: 14.375rem minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+.od-page-content,
+.od-page-enter,
+.od-panel,
+.od-workflow,
+.od-table-scroll,
+.od-settings-body > *,
+.ml-grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.od-page-content > h1 {
+  font-size: clamp(1.625rem, 3vw, 2.625rem);
+  margin-bottom: 1.5rem;
+}
+
+.od-table-scroll {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.od-panel input[type='checkbox'] {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--od-accent);
+  cursor: pointer;
+}
+
+.od-panel label:has(input[type='checkbox']) {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.625rem;
+  min-height: var(--od-touch);
+  cursor: pointer;
+}
+
+.od-analysis-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 0.75rem;
+}
+
+.od-analysis-actions label {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+
+@media (max-width: 48rem) {
+  .od-analysis-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .od-analysis-actions label {
+    flex: auto;
+  }
+
+  .od-analysis-actions .od-button {
+    width: 100%;
+  }
+}
+
+.od-panel td label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--od-touch);
+}
+
+.od-panel input[type='range'] {
+  width: 100%;
+  min-height: var(--od-touch);
+}
+
+.od-workflow a,
+.od-button,
+.od-dashboard-link,
+.od-auth-option,
+.od-nav-link,
+.od-settings summary {
+  min-width: var(--od-touch);
+  min-height: var(--od-touch);
+}
+
+.od-workflow a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.od-button {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.od-field input,
+.od-workflow select,
+.od-settings select {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--od-touch);
+  box-sizing: border-box;
+}
+
+.od-dashboard-card {
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.od-dashboard-actions {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.od-toast {
+  overflow-wrap: anywhere;
+}
+
+.od-toast button {
+  flex-shrink: 0;
+}
+
+.ml-downloads > * {
+  max-width: 100%;
+}
+
+@media (max-width: 64rem) {
+  .od-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .od-sidebar nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  .od-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .od-sidebar {
+    order: 0;
+    position: static;
+    padding: 0.5rem;
+  }
+
+  .od-page-content {
+    order: 1;
+  }
+
+  .od-sidebar nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+
+  .od-sidebar .od-nav-link {
+    display: flex;
+    min-height: 3rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .od-dashboard-actions,
+  .ml-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .od-settings-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .od-upload {
+    padding: 1rem;
+  }
+
+  .od-upload-area {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 22rem) {
+  .od-sidebar nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app {
+    width: calc(100% - 1rem);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 30rem) {
+  .od-sidebar {
+    position: static;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (pointer: coarse) {
+  button,
+  select,
+  input:not([type='hidden']):not([type='checkbox']),
+  summary {
+    min-height: 44px;
+  }
+
+  button,
+  select {
+    min-width: 44px;
+  }
+}
+
+/* Accessible content links on touch devices. */
+@media (any-pointer: coarse) {
+  main a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--od-touch);
+    min-width: var(--od-touch);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Consistent content link styling */
+
+.od-panel a,
+.od-panel a:visited {
+  color: var(--od-accent);
+  text-underline-offset: 0.2em;
+}
+
+.od-panel a:hover {
+  text-decoration-thickness: 2px;
+}

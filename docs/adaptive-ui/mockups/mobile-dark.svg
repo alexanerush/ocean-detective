@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1473" viewBox="0 0 390 1473"><rect x="0" y="0" width="390" height="1473" rx="0" fill="#071417" stroke="none" opacity="1"/>
+<text x="16" y="28" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#75d8d3" text-anchor="start">SATELLITE INTELLIGENCE PLATFORM</text>
+<text x="16" y="72" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700" fill="#e8f1f2" text-anchor="start">Ocean Detective</text>
+<text x="16" y="98.0" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#a9c1c4" text-anchor="start">Detection and analysis of marine debris</text>
+<text x="16" y="125.2" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#a9c1c4" text-anchor="start">using Sentinel-2 satellite imagery.</text>
+<rect x="16" y="164.4" width="358" height="46" rx="16" fill="#10272c" stroke="#38585d" opacity="1"/>
+<g transform="translate(32,177.4)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5 H18 M7 2 V8 M2 15 H18 M13 12 V18"/></g>
+<text x="62" y="193.4" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#e8f1f2" text-anchor="start">Display settings</text>
+<rect x="16" y="234.4" width="358" height="120" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<rect x="24.0" y="242.4" width="111.33333333333333" height="48" rx="10" fill="#75d8d3" stroke="none" opacity="0.12"/>
+<g transform="translate(69.66666666666666,246.4)" fill="none" stroke="#75d8d3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10 L10 3 L18 10 M4 9 V18 H16 V9 M8 18 V12 H12 V18"/></g>
+<text x="79.66666666666666" y="280.4" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#75d8d3" text-anchor="middle">Home</text>
+<g transform="translate(184.99999999999997,246.4)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4 H17 V16 H3 Z M6 13 L10 8 L14 13"/></g>
+<text x="194.99999999999997" y="280.4" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">Analysis</text>
+<g transform="translate(300.3333333333333,246.4)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2 H13 M8 2 V8 L2 18 H18 L12 8 V2"/></g>
+<text x="310.3333333333333" y="280.4" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">Models</text>
+<g transform="translate(69.66666666666666,298.4)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 A7 7 0 1 0 5 5 M3 3 V8 H8 M10 6 V10 L14 12"/></g>
+<text x="79.66666666666666" y="332.4" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">History</text>
+<g transform="translate(184.99999999999997,298.4)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 A4 4 0 1 0 10 11 A4 4 0 1 0 10 3 M3 19 Q3 13 10 13 Q17 13 17 19"/></g>
+<text x="194.99999999999997" y="332.4" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">Account</text>
+<text x="16" y="382.4" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#75d8d3" text-anchor="start">PLATFORM OVERVIEW</text>
+<text x="16" y="425.4" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#e8f1f2" text-anchor="start">Dashboard</text>
+<text x="16" y="453.4" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#a9c1c4" text-anchor="start">A research-oriented platform for marine</text>
+<text x="16" y="480.59999999999997" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#a9c1c4" text-anchor="start">debris detection and multispectral</text>
+<text x="16" y="507.79999999999995" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#a9c1c4" text-anchor="start">satellite image analysis.</text>
+<rect x="16.0" y="547.0" width="358.0" height="172" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<text x="32.0" y="577.0" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#75d8d3" text-anchor="start">01</text>
+<text x="32.0" y="606.0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#e8f1f2" text-anchor="start">Satellite Analysis</text>
+<text x="32.0" y="632.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Upload multispectral satellite imagery and</text>
+<text x="32.0" y="655.8" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">explore marine debris detection.</text>
+<text x="32.0" y="701.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#75d8d3" text-anchor="start">Start analysis →</text>
+<rect x="16.0" y="735.0" width="358.0" height="172" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<text x="32.0" y="765.0" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#75d8d3" text-anchor="start">02</text>
+<text x="32.0" y="794.0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#e8f1f2" text-anchor="start">ML Experiments</text>
+<text x="32.0" y="820.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Explore model performance and compare RGB</text>
+<text x="32.0" y="843.8" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">and multispectral approaches.</text>
+<text x="32.0" y="889.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#75d8d3" text-anchor="start">Explore experiments →</text>
+<rect x="16.0" y="923.0" width="358.0" height="172" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<text x="32.0" y="953.0" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#75d8d3" text-anchor="start">03</text>
+<text x="32.0" y="982.0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#e8f1f2" text-anchor="start">Analysis History</text>
+<text x="32.0" y="1008.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Access previously submitted satellite</text>
+<text x="32.0" y="1031.8" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">images and analysis results.</text>
+<text x="32.0" y="1077.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#75d8d3" text-anchor="start">View history →</text>
+<rect x="16" y="1119.0" width="358" height="330" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<text x="32" y="1149.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#75d8d3" text-anchor="start">ABOUT THE PROJECT</text>
+<text x="32" y="1179.0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#e8f1f2" text-anchor="start">Marine Debris Detection</text>
+<text x="32" y="1205.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Ocean Detective is designed to support</text>
+<text x="32" y="1228.8" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">marine pollution monitoring through the</text>
+<text x="32" y="1252.6" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">analysis of multispectral Sentinel-2</text>
+<text x="32" y="1276.4" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">satellite imagery and machine learning</text>
+<text x="32" y="1300.2" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">techniques.</text>
+<rect x="32" y="1332.0" width="89.0" height="28" rx="14" fill="#75d8d3" stroke="none" opacity="0.08"/>
+<text x="44" y="1350.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#75d8d3" text-anchor="start">Sentinel-2</text>
+<rect x="129.0" y="1332.0" width="63.0" height="28" rx="14" fill="#75d8d3" stroke="none" opacity="0.08"/>
+<text x="141.0" y="1350.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#75d8d3" text-anchor="start">MARIDA</text>
+<rect x="32" y="1366.0" width="160.5" height="28" rx="14" fill="#75d8d3" stroke="none" opacity="0.08"/>
+<text x="44" y="1384.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#75d8d3" text-anchor="start">Multispectral Imagery</text>
+<rect x="200.5" y="1366.0" width="128.0" height="28" rx="14" fill="#75d8d3" stroke="none" opacity="0.08"/>
+<text x="212.5" y="1384.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#75d8d3" text-anchor="start">Machine Learning</text>
+<rect x="32" y="1400.0" width="160.5" height="28" rx="14" fill="#75d8d3" stroke="none" opacity="0.08"/>
+<text x="44" y="1418.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#75d8d3" text-anchor="start">Semantic Segmentation</text></svg>

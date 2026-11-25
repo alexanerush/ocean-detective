@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1340" viewBox="0 0 1440 1340"><rect x="0" y="0" width="1440" height="1340" rx="0" fill="#eef5f5" stroke="none" opacity="1"/>
+<g transform="translate(0,0)">
+<rect x="0" y="0" width="700" height="1340" rx="0" fill="#eef5f5" stroke="none" opacity="1"/>
+<text x="28" y="42" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#006663" text-anchor="start">OCEAN DETECTIVE</text>
+<text x="28" y="84" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700" fill="#122f35" text-anchor="start">LIGHT — UI Kit</text>
+<text x="28" y="126" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#006663" text-anchor="start">01 / COLOR TOKENS</text>
+<rect x="28" y="144" width="48" height="48" rx="8" fill="#eef5f5" stroke="#a0b8bc" opacity="1"/>
+<text x="86" y="162" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">bg</text>
+<text x="86" y="182" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#EEF5F5</text>
+<rect x="246" y="144" width="48" height="48" rx="8" fill="#fff" stroke="#a0b8bc" opacity="1"/>
+<text x="304" y="162" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">surface</text>
+<text x="304" y="182" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#FFF</text>
+<rect x="464" y="144" width="48" height="48" rx="8" fill="#122f35" stroke="#a0b8bc" opacity="1"/>
+<text x="522" y="162" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">text</text>
+<text x="522" y="182" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#122F35</text>
+<rect x="28" y="220" width="48" height="48" rx="8" fill="#405b61" stroke="#a0b8bc" opacity="1"/>
+<text x="86" y="238" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">muted</text>
+<text x="86" y="258" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#405B61</text>
+<rect x="246" y="220" width="48" height="48" rx="8" fill="#006663" stroke="#a0b8bc" opacity="1"/>
+<text x="304" y="238" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">accent</text>
+<text x="304" y="258" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#006663</text>
+<rect x="464" y="220" width="48" height="48" rx="8" fill="#a0b8bc" stroke="#a0b8bc" opacity="1"/>
+<text x="522" y="238" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">border</text>
+<text x="522" y="258" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#A0B8BC</text>
+<rect x="28" y="296" width="48" height="48" rx="8" fill="#52777a" stroke="#a0b8bc" opacity="1"/>
+<text x="86" y="314" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">control-border</text>
+<text x="86" y="334" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#52777A</text>
+<rect x="246" y="296" width="48" height="48" rx="8" fill="#12663c" stroke="#a0b8bc" opacity="1"/>
+<text x="304" y="314" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">success</text>
+<text x="304" y="334" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#12663C</text>
+<rect x="464" y="296" width="48" height="48" rx="8" fill="#a11d2b" stroke="#a0b8bc" opacity="1"/>
+<text x="522" y="314" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#122f35" text-anchor="start">error</text>
+<text x="522" y="334" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="start">#A11D2B</text>
+<text x="28" y="394" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#006663" text-anchor="start">02 / TYPOGRAPHY</text>
+<text x="28" y="445" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700" fill="#122f35" text-anchor="start">Ocean Detective</text>
+<text x="28" y="483" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#122f35" text-anchor="start">Dashboard</text>
+<text x="28" y="515" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#122f35" text-anchor="start">Satellite Analysis</text>
+<text x="28" y="542" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#122f35" text-anchor="start">Body text / 16 px</text>
+<text x="28" y="566" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#405b61" text-anchor="start">Secondary text / 14 px</text>
+<text x="28" y="608" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#006663" text-anchor="start">03 / BUTTON STATES</text>
+<text x="28" y="634" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#405b61" text-anchor="start">Default</text>
+<rect x="28" y="646" width="196" height="44" rx="10" fill="#fff" stroke="#52777a" opacity="1"/>
+<text x="126.0" y="674" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#006663" text-anchor="middle">Run Analysis</text>
+<text x="246" y="634" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#405b61" text-anchor="start">Focus</text>
+<rect x="242" y="642" width="204" height="52" rx="12" fill="none" stroke="#006663" opacity="1"/>
+<rect x="246" y="646" width="196" height="44" rx="10" fill="#fff" stroke="#52777a" opacity="1"/>
+<text x="344.0" y="674" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#006663" text-anchor="middle">Run Analysis</text>
+<text x="464" y="634" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#405b61" text-anchor="start">Disabled</text>
+<g opacity=".55">
+<rect x="464" y="646" width="196" height="44" rx="10" fill="#fff" stroke="#52777a" opacity="1"/>
+<text x="562.0" y="674" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#006663" text-anchor="middle">Run Analysis</text>
+</g>
+<text x="28" y="736" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#006663" text-anchor="start">04 / FORM CONTROLS</text>
+<text x="28" y="764" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#122f35" text-anchor="start">Email</text>
+<rect x="28" y="774" width="310" height="44" rx="10" fill="#fff" stroke="#52777a" opacity="1"/>
+<text x="40" y="802" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#122f35" text-anchor="start"></text>
+<text x="362" y="764" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#122f35" text-anchor="start">Email</text>
+<rect x="362" y="774" width="310" height="44" rx="10" fill="#fff" stroke="#52777a" opacity="1"/>
+<text x="374" y="802" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#122f35" text-anchor="start">invalid-email</text>
+<text x="362" y="838" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#a11d2b" text-anchor="start">Enter a valid email address.</text>
+<rect x="28" y="866" width="20" height="20" rx="3" fill="#fff" stroke="#52777a" opacity="1"/>
+<text x="58" y="881" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#122f35" text-anchor="start">Confirm band order</text>
+<rect x="362" y="866" width="20" height="20" rx="3" fill="#006663" stroke="none" opacity="1"/>
+<text x="372" y="881" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#eef5f5" text-anchor="middle">✓</text>
+<text x="392" y="881" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#122f35" text-anchor="start">Confirmed</text>
+<text x="28" y="932" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#006663" text-anchor="start">05 / NAVIGATION</text>
+<rect x="28" y="950" width="644" height="66" rx="18" fill="#fff" stroke="#a0b8bc" opacity="1"/>
+<rect x="36" y="958" width="122" height="48" rx="10" fill="#006663" stroke="none" opacity="0.12"/>
+<g transform="translate(87.0,962)" fill="none" stroke="#006663" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10 L10 3 L18 10 M4 9 V18 H16 V9 M8 18 V12 H12 V18"/></g>
+<text x="97.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#006663" text-anchor="middle">Home</text>
+<g transform="translate(213.0,962)" fill="none" stroke="#405b61" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4 H17 V16 H3 Z M6 13 L10 8 L14 13"/></g>
+<text x="223.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="middle">Analysis</text>
+<g transform="translate(339.0,962)" fill="none" stroke="#405b61" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2 H13 M8 2 V8 L2 18 H18 L12 8 V2"/></g>
+<text x="349.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="middle">Models</text>
+<g transform="translate(465.0,962)" fill="none" stroke="#405b61" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 A7 7 0 1 0 5 5 M3 3 V8 H8 M10 6 V10 L14 12"/></g>
+<text x="475.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="middle">History</text>
+<g transform="translate(591.0,962)" fill="none" stroke="#405b61" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 A4 4 0 1 0 10 11 A4 4 0 1 0 10 3 M3 19 Q3 13 10 13 Q17 13 17 19"/></g>
+<text x="601.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#405b61" text-anchor="middle">Account</text>
+<text x="28" y="1060" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#006663" text-anchor="start">06 / CONTENT &amp; FEEDBACK</text>
+<rect x="28" y="1078" width="310" height="156" rx="18" fill="#fff" stroke="#a0b8bc" opacity="1"/>
+<text x="44" y="1106" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#006663" text-anchor="start">01</text>
+<text x="44" y="1134" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#122f35" text-anchor="start">Satellite Analysis</text>
+<text x="44" y="1160.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#405b61" text-anchor="start">Upload multispectral satellite</text>
+<text x="44" y="1183.8" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#405b61" text-anchor="start">imagery.</text>
+<text x="44" y="1212" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#006663" text-anchor="start">Start analysis →</text>
+<rect x="362" y="1078" width="310" height="156" rx="18" fill="#fff" stroke="#a0b8bc" opacity="1"/>
+<text x="378" y="1110" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#122f35" text-anchor="start">Upload status</text>
+<text x="378" y="1144" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#12663c" text-anchor="start">Image validated and saved.</text>
+<text x="378" y="1178" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#a11d2b" text-anchor="start">File size must not exceed 25 MiB.</text>
+<text x="28" y="1280" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#405b61" text-anchor="start">Touch target: 44 px  ·  Panel radius: 16 px</text>
+<text x="28" y="1306" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#405b61" text-anchor="start">Spacing: 16 px  ·  Checkbox: 20 × 20 px</text>
+</g>
+<g transform="translate(720,0)">
+<rect x="0" y="0" width="700" height="1340" rx="0" fill="#071417" stroke="none" opacity="1"/>
+<text x="28" y="42" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#75d8d3" text-anchor="start">OCEAN DETECTIVE</text>
+<text x="28" y="84" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700" fill="#e8f1f2" text-anchor="start">DARK — UI Kit</text>
+<text x="28" y="126" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#75d8d3" text-anchor="start">01 / COLOR TOKENS</text>
+<rect x="28" y="144" width="48" height="48" rx="8" fill="#071417" stroke="#38585d" opacity="1"/>
+<text x="86" y="162" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">bg</text>
+<text x="86" y="182" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#071417</text>
+<rect x="246" y="144" width="48" height="48" rx="8" fill="#10272c" stroke="#38585d" opacity="1"/>
+<text x="304" y="162" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">surface</text>
+<text x="304" y="182" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#10272C</text>
+<rect x="464" y="144" width="48" height="48" rx="8" fill="#e8f1f2" stroke="#38585d" opacity="1"/>
+<text x="522" y="162" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">text</text>
+<text x="522" y="182" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#E8F1F2</text>
+<rect x="28" y="220" width="48" height="48" rx="8" fill="#a9c1c4" stroke="#38585d" opacity="1"/>
+<text x="86" y="238" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">muted</text>
+<text x="86" y="258" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#A9C1C4</text>
+<rect x="246" y="220" width="48" height="48" rx="8" fill="#75d8d3" stroke="#38585d" opacity="1"/>
+<text x="304" y="238" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">accent</text>
+<text x="304" y="258" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#75D8D3</text>
+<rect x="464" y="220" width="48" height="48" rx="8" fill="#38585d" stroke="#38585d" opacity="1"/>
+<text x="522" y="238" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">border</text>
+<text x="522" y="258" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#38585D</text>
+<rect x="28" y="296" width="48" height="48" rx="8" fill="#739b9d" stroke="#38585d" opacity="1"/>
+<text x="86" y="314" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">control-border</text>
+<text x="86" y="334" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#739B9D</text>
+<rect x="246" y="296" width="48" height="48" rx="8" fill="#75e0ad" stroke="#38585d" opacity="1"/>
+<text x="304" y="314" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">success</text>
+<text x="304" y="334" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#75E0AD</text>
+<rect x="464" y="296" width="48" height="48" rx="8" fill="#ffb4b4" stroke="#38585d" opacity="1"/>
+<text x="522" y="314" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#e8f1f2" text-anchor="start">error</text>
+<text x="522" y="334" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="start">#FFB4B4</text>
+<text x="28" y="394" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#75d8d3" text-anchor="start">02 / TYPOGRAPHY</text>
+<text x="28" y="445" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700" fill="#e8f1f2" text-anchor="start">Ocean Detective</text>
+<text x="28" y="483" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#e8f1f2" text-anchor="start">Dashboard</text>
+<text x="28" y="515" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#e8f1f2" text-anchor="start">Satellite Analysis</text>
+<text x="28" y="542" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="400" fill="#e8f1f2" text-anchor="start">Body text / 16 px</text>
+<text x="28" y="566" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Secondary text / 14 px</text>
+<text x="28" y="608" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#75d8d3" text-anchor="start">03 / BUTTON STATES</text>
+<text x="28" y="634" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#a9c1c4" text-anchor="start">Default</text>
+<rect x="28" y="646" width="196" height="44" rx="10" fill="#10272c" stroke="#739b9d" opacity="1"/>
+<text x="126.0" y="674" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#75d8d3" text-anchor="middle">Run Analysis</text>
+<text x="246" y="634" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#a9c1c4" text-anchor="start">Focus</text>
+<rect x="242" y="642" width="204" height="52" rx="12" fill="none" stroke="#75d8d3" opacity="1"/>
+<rect x="246" y="646" width="196" height="44" rx="10" fill="#10272c" stroke="#739b9d" opacity="1"/>
+<text x="344.0" y="674" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#75d8d3" text-anchor="middle">Run Analysis</text>
+<text x="464" y="634" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#a9c1c4" text-anchor="start">Disabled</text>
+<g opacity=".55">
+<rect x="464" y="646" width="196" height="44" rx="10" fill="#10272c" stroke="#739b9d" opacity="1"/>
+<text x="562.0" y="674" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#75d8d3" text-anchor="middle">Run Analysis</text>
+</g>
+<text x="28" y="736" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#75d8d3" text-anchor="start">04 / FORM CONTROLS</text>
+<text x="28" y="764" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#e8f1f2" text-anchor="start">Email</text>
+<rect x="28" y="774" width="310" height="44" rx="10" fill="#10272c" stroke="#739b9d" opacity="1"/>
+<text x="40" y="802" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#e8f1f2" text-anchor="start"></text>
+<text x="362" y="764" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#e8f1f2" text-anchor="start">Email</text>
+<rect x="362" y="774" width="310" height="44" rx="10" fill="#10272c" stroke="#739b9d" opacity="1"/>
+<text x="374" y="802" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#e8f1f2" text-anchor="start">invalid-email</text>
+<text x="362" y="838" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#ffb4b4" text-anchor="start">Enter a valid email address.</text>
+<rect x="28" y="866" width="20" height="20" rx="3" fill="#10272c" stroke="#739b9d" opacity="1"/>
+<text x="58" y="881" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#e8f1f2" text-anchor="start">Confirm band order</text>
+<rect x="362" y="866" width="20" height="20" rx="3" fill="#75d8d3" stroke="none" opacity="1"/>
+<text x="372" y="881" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#071417" text-anchor="middle">✓</text>
+<text x="392" y="881" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#e8f1f2" text-anchor="start">Confirmed</text>
+<text x="28" y="932" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#75d8d3" text-anchor="start">05 / NAVIGATION</text>
+<rect x="28" y="950" width="644" height="66" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<rect x="36" y="958" width="122" height="48" rx="10" fill="#75d8d3" stroke="none" opacity="0.12"/>
+<g transform="translate(87.0,962)" fill="none" stroke="#75d8d3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10 L10 3 L18 10 M4 9 V18 H16 V9 M8 18 V12 H12 V18"/></g>
+<text x="97.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#75d8d3" text-anchor="middle">Home</text>
+<g transform="translate(213.0,962)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4 H17 V16 H3 Z M6 13 L10 8 L14 13"/></g>
+<text x="223.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">Analysis</text>
+<g transform="translate(339.0,962)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2 H13 M8 2 V8 L2 18 H18 L12 8 V2"/></g>
+<text x="349.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">Models</text>
+<g transform="translate(465.0,962)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 A7 7 0 1 0 5 5 M3 3 V8 H8 M10 6 V10 L14 12"/></g>
+<text x="475.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">History</text>
+<g transform="translate(591.0,962)" fill="none" stroke="#a9c1c4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 A4 4 0 1 0 10 11 A4 4 0 1 0 10 3 M3 19 Q3 13 10 13 Q17 13 17 19"/></g>
+<text x="601.0" y="996" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="#a9c1c4" text-anchor="middle">Account</text>
+<text x="28" y="1060" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#75d8d3" text-anchor="start">06 / CONTENT &amp; FEEDBACK</text>
+<rect x="28" y="1078" width="310" height="156" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<text x="44" y="1106" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#75d8d3" text-anchor="start">01</text>
+<text x="44" y="1134" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#e8f1f2" text-anchor="start">Satellite Analysis</text>
+<text x="44" y="1160.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Upload multispectral satellite</text>
+<text x="44" y="1183.8" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">imagery.</text>
+<text x="44" y="1212" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#75d8d3" text-anchor="start">Start analysis →</text>
+<rect x="362" y="1078" width="310" height="156" rx="18" fill="#10272c" stroke="#38585d" opacity="1"/>
+<text x="378" y="1110" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#e8f1f2" text-anchor="start">Upload status</text>
+<text x="378" y="1144" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#75e0ad" text-anchor="start">Image validated and saved.</text>
+<text x="378" y="1178" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="400" fill="#ffb4b4" text-anchor="start">File size must not exceed 25 MiB.</text>
+<text x="28" y="1280" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Touch target: 44 px  ·  Panel radius: 16 px</text>
+<text x="28" y="1306" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a9c1c4" text-anchor="start">Spacing: 16 px  ·  Checkbox: 20 × 20 px</text>
+</g></svg>
