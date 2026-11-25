@@ -1,379 +1,370 @@
 # Ocean Detective
 
-**Research web application for marine debris detection and analysis using Sentinel-2 satellite imagery.**
+### Web Application for Marine Debris Detection Through Multispectral Satellite Image Analysis
 
-Ocean Detective is an internship research prototype built around the MARIDA dataset. The project investigates whether additional Sentinel-2 spectral bands improve Marine Debris detection compared with an RGB-only baseline.
+## Project Overview
 
-The current version combines satellite image inspection, ground-truth visualization, a reproducible Random Forest experiment, quantitative validation metrics, prediction/error visualization, and a web interface for presenting the results.
+Ocean Detective is a full-stack web application designed
+for marine debris detection and semantic segmentation
+of multispectral satellite imagery.
 
----
+The platform combines machine learning, geospatial data
+processing, interactive visualization and persistent
+data management within a unified web interface.
 
-## Research Question
+The project investigates the effectiveness of
+multispectral satellite imagery compared to conventional
+RGB imagery for marine debris detection.
 
-**Do additional Sentinel-2 spectral bands improve Marine Debris detection compared with RGB imagery?**
+## Project Objectives
 
-Two Random Forest models are compared under the same training configuration:
+- Develop an interactive web platform for satellite image analysis.
+- Implement machine learning-based marine debris detection.
+- Compare RGB and multispectral classification approaches.
+- Visualize semantic segmentation and prediction confidence.
+- Provide secure user authentication and personal analysis history.
+- Establish a modular and extensible application architecture.
 
-- **RGB baseline:** B02, B03, B04
-- **Multispectral baseline:** all 11 available Sentinel-2 bands
+## Main Features
 
-The experiment uses the official MARIDA train/validation/test split.
+- Responsive single-page application.
+- User registration, authentication and account management.
+- Multispectral GeoTIFF upload and validation.
+- Pixel-level classification across 15 MARIDA classes.
+- Interactive segmentation visualization.
+- Prediction confidence visualization.
+- Class distribution statistics.
+- Class visibility and overlay controls.
+- Personal analysis history.
+- Downloadable analysis artifacts.
+- RGB and multispectral model comparison.
+- Light, dark and system appearance modes.
 
----
+## System Architecture
 
-## Dataset
-
-The project uses the **MARIDA (Marine Debris Archive)** dataset based on Sentinel-2 satellite imagery.
-
-Official dataset split:
-
-| Split | Patches |
-|---|---:|
-| Train | 694 |
-| Validation | 328 |
-| Test | 359 |
-| **Total** | **1381** |
-
-Each image patch contains:
-
-- 11 Sentinel-2 spectral bands
-- semantic class mask
-- annotation confidence mask
-- spatial dimensions of 256 × 256 pixels
-
-The spectral bands used in the multispectral experiment are:
-
-`B01, B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12`
-
-The MARIDA TIFF files are intentionally excluded from Git because of their size.
-
----
-
-## Experiment Design
-
-Two `RandomForestClassifier` models are trained using the same configuration.
-
-```text
-n_estimators:     100
-max_depth:        20
-min_samples_leaf: 2
-class_weight:     balanced
-random_state:     42
-n_jobs:           -1
+```mermaid
+flowchart LR
+    U[User] --> F[React SPA]
+    F -->|REST API| B[Express Backend]
+    B --> ORM[Sequelize ORM]
+    ORM --> D[(PostgreSQL)]
+    B --> M[Python ML Engine]
+    M --> R[Random Forest Model]
+    B --> S[Private File Storage]
+    M --> S
+    S --> B
+    B --> F
 ```
 
-The primary controlled difference between the two baseline models is the input feature set.
+The system separates presentation, business logic,
+database persistence and machine learning inference.
 
-### RGB model
+The frontend communicates with the backend through
+a REST API. The backend validates requests, manages
+authentication and invokes Python scripts for
+geospatial processing and machine learning inference.
 
-Uses three visible bands:
+## Technology Stack
 
-```text
-B02 — Blue
-B03 — Green
-B04 — Red
-```
+| Layer | Technologies |
+|---|---|
+| Frontend | React, TypeScript, Vite |
+| State management | Redux Toolkit |
+| Routing | React Router |
+| HTTP communication | Axios |
+| Backend | Node.js, Express, TypeScript |
+| Database | PostgreSQL |
+| ORM | Sequelize |
+| Authentication | JWT, HttpOnly cookies, Argon2 |
+| Machine learning | Python, scikit-learn |
+| Data processing | NumPy |
+| Geospatial processing | Rasterio |
+| Visualization | Matplotlib, CSS, Motion |
+| Unit testing | Vitest, Testing Library |
+| End-to-end testing | Playwright |
+| Code quality | ESLint, Prettier |
+| Performance and accessibility | Lighthouse, axe |
+| Version control | Git, GitHub |
 
-### Multispectral model
-
-Uses all 11 available Sentinel-2 bands:
-
-```text
-B01 B02 B03 B04 B05 B06 B07 B08 B8A B11 B12
-```
-
-Both models are trained on the official MARIDA training split and evaluated on the official validation split.
-
-The test split is currently kept untouched for final evaluation.
-
----
-
-## Evaluation Protocol
-
-Only annotated MARIDA pixels are used for training and quantitative evaluation.
-
-Pixels with:
-
-```text
-class = 0
-```
-
-are treated as unannotated regions and excluded from TP, FP and FN calculations.
-
-Marine Debris corresponds to:
-
-```text
-class = 1
-```
-
-The multiclass Random Forest predictions are evaluated for Marine Debris using a one-vs-rest interpretation.
-
-Main metrics:
-
-- Precision
-- Recall
-- F1-score
-- Intersection over Union (IoU)
-- True Positives
-- False Positives
-- False Negatives
-
----
-
-## Validation Results
-
-Results on the official MARIDA validation split:
-
-| Metric | RGB | Multispectral |
-|---|---:|---:|
-| Precision | 10.12% | **80.46%** |
-| Recall | 12.09% | **86.98%** |
-| F1-score | 11.02% | **83.59%** |
-| IoU | 5.83% | **71.81%** |
-| True Positives | 130 | **935** |
-| False Positives | 1154 | **227** |
-| False Negatives | 945 | **140** |
-
-F1 improvement:
-
-```text
-+72.57 percentage points
-```
-
-In this baseline validation experiment, the 11-band multispectral representation substantially outperformed the RGB-only representation for Marine Debris detection.
-
-These results apply specifically to the current baseline configuration and validation protocol and should not be interpreted as general performance on unseen data.
-
----
-
-## Prediction Visualization
-
-The project also provides qualitative prediction and error visualization for a MARIDA validation patch.
-
-The visualization contains:
-
-- RGB satellite image
-- ground-truth Marine Debris mask
-- RGB model prediction
-- multispectral model prediction
-- RGB error map
-- multispectral error map
-
-Error maps distinguish:
-
-```text
-TP — True Positive
-FP — False Positive
-FN — False Negative
-```
-
-Unannotated MARIDA pixels (`class = 0`) are excluded from patch-level quantitative evaluation.
-
-The selected validation patch is used as a visual example only. Overall model performance is represented by the full validation-set metrics above.
-
----
-
-## Web Application
-
-The current prototype provides a web interface for presenting the analysis pipeline and experimental results.
-
-The interface includes:
-
-- satellite image selection UI
-- MARIDA sample analysis
-- image metadata
-- RGB visualization
-- semantic class mask
-- annotation confidence mask
-- Marine Debris ground-truth overlay
-- class distribution
-- confidence distribution
-- RGB vs multispectral model comparison
-- validation metrics
-- prediction/error visualization
-- experiment configuration
-
-### Current analysis pipeline
-
-```text
-Web interface
-      ↓
-Node.js / Express API
-      ↓
-Python analysis scripts
-      ↓
-MARIDA GeoTIFF
-      ↓
-Generated JSON + visualizations
-      ↓
-Web interface
-```
-
-The current prototype analyzes a configured local MARIDA sample on the backend.
-
-The browser file-selection component demonstrates the intended interaction, but arbitrary browser-selected TIFF files are not yet uploaded to or processed by the backend.
-
----
-
-## Architecture
+## Repository Structure
 
 ```text
 ocean-detective/
-│
-├── backend/
-│   └── Node.js + Express + TypeScript API
-│
 ├── frontend/
-│   └── Vite + TypeScript web interface
-│
+│   ├── src/
+│   ├── tests/
+│   └── e2e/
+├── backend/
+│   ├── src/
+│   ├── migrations/
+│   └── scripts/
 ├── ml/
 │   ├── scripts/
-│   │   ├── inspect_marida.py
-│   │   ├── baseline_rf.py
-│   │   └── visualize_predictions.py
-│   │
 │   └── models/
-│       └── locally generated Random Forest models
-│
 ├── data/
-│   └── local MARIDA sample files
-│
 ├── results/
-│   ├── experiment metrics
-│   └── generated visualizations
-│
-└── docs/
-    └── project documentation
+├── docs/
+└── README.md
 ```
 
----
+Large datasets, trained model binaries, environment
+secrets and private user artifacts are excluded from
+version control.
 
-## Main Technologies
+## Machine Learning Research
 
-### Machine Learning and Data Processing
+### Dataset
 
-- Python
-- NumPy
-- Rasterio
-- scikit-learn
-- Matplotlib
-- joblib
+The project uses MARIDA (Marine Debris Archive),
+a multispectral satellite imagery dataset for
+marine surface classification.
 
-### Backend
+The official dataset splits are preserved:
 
-- Node.js
-- Express
-- TypeScript
+| Dataset split | Number of patches |
+|---|---:|
+| Training | 694 |
+| Validation | 328 |
+| Test | 359 |
+| Total | 1381 |
 
-### Frontend
+Each patch contains 11 spectral bands and has a
+spatial resolution of 256 x 256 pixels.
 
-- Vite
-- TypeScript
-- HTML/CSS
+### Experimental Approach
 
-### Data
+Two multiclass Random Forest models were trained:
 
-- Sentinel-2 multispectral imagery
-- GeoTIFF
-- MARIDA dataset
+1. RGB model using three visible spectral bands.
+2. Multispectral model using all 11 supported bands.
 
----
+Both models use the same principal hyperparameters:
 
-## Reproducing the ML Experiment
+| Parameter | Value |
+|---|---|
+| Number of estimators | 100 |
+| Maximum depth | 20 |
+| Minimum samples per leaf | 2 |
+| Class weighting | Balanced |
+| Random state | 42 |
 
-Install Python dependencies:
+Unannotated pixels are excluded from supervised
+training and evaluation.
+
+### Marine Debris Validation Results
+
+Marine Debris is evaluated using a one-vs-rest
+interpretation of multiclass predictions.
+
+| Metric | RGB | Multispectral |
+|---|---:|---:|
+| Precision | 10.12% | 80.46% |
+| Recall | 12.09% | 86.98% |
+| F1-score | 11.02% | 83.59% |
+| IoU | 5.83% | 71.81% |
+
+The multispectral approach improved the Marine Debris
+F1-score by 72.57 percentage points.
+
+### Multiclass Validation Results
+
+| Metric | Result |
+|---|---:|
+| Overall accuracy | Approximately 92% |
+| Macro F1-score | Approximately 55% |
+| Weighted F1-score | Approximately 93% |
+| Mean IoU | 43.62% |
+
+Evaluation was performed on 213102 annotated,
+finite validation pixels.
+
+Detailed multiclass metrics are available in:
+
+[Multiclass validation results](results/multiclass_rf_validation.json)
+
+These results represent validation performance.
+The official test split remains reserved for final
+model evaluation.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22.17 or a compatible newer version.
+- npm.
+- PostgreSQL.
+- Python 3.9 or a compatible newer version.
+- MARIDA dataset and trained model artifacts for ML functionality.
+
+### Clone the Repository
 
 ```bash
-pip install -r ml/requirements.txt
+git clone https://github.com/alexanerush/ocean-detective.git
+cd ocean-detective
 ```
 
-The full MARIDA dataset must be available locally.
-
-Run the baseline experiment:
+### Python Dependencies
 
 ```bash
-python3 ml/scripts/baseline_rf.py
+python3 -m pip install -r ml/requirements.txt
 ```
 
-The script trains both Random Forest models and produces validation metrics.
+Prepare the required MARIDA data and trained model
+artifacts according to the ML documentation.
 
-Generated model files are stored locally and intentionally excluded from Git because of their size.
-
-Run prediction visualization:
+### Backend Setup
 
 ```bash
-python3 ml/scripts/visualize_predictions.py
+cd backend
+npm ci
+cp .env.example .env
 ```
 
-Run the configured MARIDA sample inspection:
+Configure the PostgreSQL database connection,
+application credentials and JWT secret.
+
+The database and required roles must exist before
+running migrations.
+
+Apply database migrations using the migration
+administrator credentials:
 
 ```bash
-python3 ml/scripts/inspect_marida.py
+npm run db:migrate
+npm run dev
 ```
 
----
+Backend URL:
 
-## Current Limitations
+http://localhost:3000
 
-This project is a research prototype rather than an operational marine-monitoring system.
+Health endpoint:
 
-Current limitations include:
+http://localhost:3000/api/health
 
-- arbitrary browser-selected GeoTIFF files are not yet processed by the backend
-- the Random Forest experiment uses raw spectral bands only
-- spectral indices and texture features are not included
-- MARIDA annotation-confidence values are not currently used as training sample weights
-- class aggregation used by the official MARIDA Random Forest implementation is not reproduced
-- the final test split has not yet been evaluated
-- the application does not process live satellite streams
-- the system does not estimate the physical mass or quantity of plastic
-- the system is not intended for global real-time ocean monitoring
+### Frontend Setup
 
-These constraints are intentional for the current research prototype and provide directions for future development.
+Open a separate terminal:
 
----
+```bash
+cd frontend
+npm ci
+cp .env.example .env
+npm run dev
+```
 
-## Reproducibility
+Frontend URL:
 
-The repository contains:
+http://localhost:5173
 
-- data inspection code
-- ML training code
-- prediction visualization code
-- experiment configuration
-- validation metrics
-- web application
-- generated comparison artifacts
-- dependency list
+### Production Build
 
-Large datasets and trained model binaries are excluded from Git and can be reproduced locally from the provided scripts.
+Frontend:
 
----
+```bash
+cd frontend
+npm run build
+```
+
+Backend:
+
+```bash
+cd backend
+npm run build
+npm start
+```
+
+## Testing and Quality Assurance
+
+The frontend includes automated unit, component,
+integration and end-to-end tests.
+
+### Latest Unit and Integration Test Results
+
+| Test suite | Passed |
+|---|---:|
+| API error handling | 4/4 |
+| Redux analysis state | 1/1 |
+| ImageUpload | 3/3 |
+| AuthForm | 1/1 |
+| ImageComparison | 6/6 |
+| Total | 15/15 |
+
+All five test files passed.
+
+Three key UI components are directly covered:
+AuthForm, ImageUpload and ImageComparison.
+
+The latest production frontend build also completed
+successfully.
+
+The previous end-to-end verification included
+12 successfully completed Playwright tests.
+Final end-to-end re-verification after full-stack
+integration remains pending.
+
+## Security
+
+The application implements:
+
+- Argon2 password hashing.
+- JWT-based authentication.
+- HttpOnly authentication cookies.
+- Authentication middleware.
+- Resource ownership verification.
+- Restricted CORS configuration.
+- Request origin validation.
+- Authentication and upload rate limiting.
+- Helmet security middleware.
+- Private upload and analysis storage.
+- Dedicated PostgreSQL application roles.
+- Environment-based configuration.
+
+## Documentation
+
+- [Frontend architecture and implementation](frontend/README.md)
+- [Frontend quality assurance](frontend/QUALITY-README.md)
+- [Backend architecture and API](backend/README.md)
+- [Machine learning documentation](ml/README.md)
+- [Research baseline archive](docs/research-baseline.md)
+
+## Current Project Status
+
+| Development area | Status |
+|---|---|
+| Dataset research | Implemented |
+| Random Forest baseline | Implemented |
+| Multispectral classification | Implemented |
+| Frontend SPA | Implemented |
+| REST API | Implemented |
+| PostgreSQL integration | Implemented |
+| Authentication | Implemented |
+| User image upload | Implemented |
+| ML inference integration | Implemented |
+| Interactive visualization | Implemented |
+| Persistent analysis history | Implemented |
+| Frontend unit and component testing | 15/15 passed |
+| Frontend production build | Passed |
+| Final E2E verification | Pending |
+| Cloud deployment | Planned |
+| Final model evaluation | Planned |
+
+## Limitations
+
+- Input imagery must match the supported MARIDA
+  spectral band order and preprocessing.
+- Model performance varies across semantic classes.
+- Prediction confidence is not calibrated probability.
+- Pixel counts do not represent physical debris mass.
+- The system does not process live satellite streams.
+- Large datasets and model binaries require local preparation.
+- Public cloud deployment is not yet available.
 
 ## Use of AI Tools
 
-AI-assisted development was used during the project for:
+AI-assisted development was used for architecture
+discussion, implementation support, debugging,
+testing assistance and documentation.
 
-- discussing architecture and implementation alternatives
-- code drafting and refactoring
-- debugging
-- documentation support
-- experiment planning
-
-Experimental decisions, execution, validation of outputs, interpretation of results, and integration were performed and reviewed as part of the project work.
-
-AI-generated suggestions were treated as implementation assistance rather than experimental evidence.
-
----
-
-## Project Status
-
-Current completed milestone:
-
-**Research prototype demonstrating RGB vs multispectral Random Forest comparison for Marine Debris detection on MARIDA, integrated into a web interface.**
-
-Current experimental conclusion:
-
-> In the validation experiment, using all 11 Sentinel-2 spectral bands produced substantially better Marine Debris detection results than using RGB bands alone.
-
-The official MARIDA test split remains reserved for final evaluation.
+Reported experimental metrics are based on executed
+experiments rather than AI-generated estimates.

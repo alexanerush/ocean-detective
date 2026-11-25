@@ -1,0 +1,17 @@
+import { DataTypes as D, DataType } from 'sequelize';
+import { db } from './connection';
+const id = () => ({type:D.BIGINT,primaryKey:true,autoIncrement:true});
+const fk = () => ({type:D.BIGINT,allowNull:false});
+const field = (type: DataType) => ({type,allowNull:false});
+const options = (tableName:string) => ({tableName,timestamps:false});
+export const User = db.define('User',{user_id:id(),email:{...field(D.STRING(254)),unique:true},password_hash:field(D.TEXT),created_at:{...field(D.DATE),defaultValue:D.NOW}},options('users'));
+export const SatelliteImage = db.define('SatelliteImage',{image_id:id(),user_id:fk(),original_filename:field(D.TEXT),storage_uri:field(D.TEXT),sha256:field(D.CHAR(64)),file_size_bytes:field(D.BIGINT),width_pixels:field(D.INTEGER),height_pixels:field(D.INTEGER),band_count:field(D.SMALLINT),uploaded_at:{...field(D.DATE),defaultValue:D.NOW}},options('satellite_images'));
+export const MlModel = db.define('MlModel',{model_id:id(),model_name:field(D.STRING(100)),version:field(D.STRING(50)),artifact_uri:field(D.TEXT),created_at:{...field(D.DATE),defaultValue:D.NOW}},options('ml_models'));
+export const Analysis = db.define('Analysis',{analysis_id:id(),image_id:fk(),model_id:fk(),status:{...field(D.STRING(20)),defaultValue:'PENDING'},submitted_at:{...field(D.DATE),defaultValue:D.NOW},completed_at:D.DATE,mask_storage_uri:D.TEXT,error_message:D.TEXT},options('analyses'));
+export const ObjectClass = db.define('ObjectClass',{class_id:id(),class_code:field(D.INTEGER),class_name:field(D.STRING(100)),description:D.TEXT},options('object_classes'));
+export const Detection = db.define('Detection',{detection_id:id(),analysis_id:fk(),class_id:fk(),pixel_count:field(D.INTEGER),mean_confidence:D.DECIMAL(5,4)},options('detections'));
+User.hasMany(SatelliteImage,{foreignKey:'user_id'}); SatelliteImage.belongsTo(User,{foreignKey:'user_id'});
+SatelliteImage.hasMany(Analysis,{foreignKey:'image_id'}); Analysis.belongsTo(SatelliteImage,{foreignKey:'image_id'});
+MlModel.hasMany(Analysis,{foreignKey:'model_id'}); Analysis.belongsTo(MlModel,{foreignKey:'model_id'});
+Analysis.hasMany(Detection,{foreignKey:'analysis_id'}); Detection.belongsTo(Analysis,{foreignKey:'analysis_id'});
+ObjectClass.hasMany(Detection,{foreignKey:'class_id'}); Detection.belongsTo(ObjectClass,{foreignKey:'class_id'});

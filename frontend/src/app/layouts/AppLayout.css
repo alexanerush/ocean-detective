@@ -1,0 +1,28 @@
+.od-layout {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.od-page-content {
+  min-width: 0;
+}
+
+.od-page-content > h1 {
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 1.2;
+  margin: 0 0 24px;
+}
+
+@media (max-width: 768px) {
+  .od-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .od-sidebar nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

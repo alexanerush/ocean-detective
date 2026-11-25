@@ -1,0 +1,2 @@
+INSERT INTO ml_models(model_name,version,artifact_uri) VALUES ('Multispectral Random Forest','1.0','ml/models/random_forest_multispectral.joblib') ON CONFLICT (model_name,version) DO NOTHING;
+INSERT INTO object_classes(class_code,class_name) VALUES (1,'Marine Debris'),(2,'Dense Sargassum'),(3,'Sparse Sargassum'),(4,'Natural Organic Material'),(5,'Ship'),(6,'Clouds'),(7,'Marine Water'),(8,'Sediment-Laden Water'),(9,'Foam'),(10,'Turbid Water'),(11,'Shallow Water'),(12,'Waves'),(13,'Cloud Shadows'),(14,'Wakes'),(15,'Mixed Water') ON CONFLICT (class_code) DO NOTHING;

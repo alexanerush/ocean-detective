@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { rateLimit } from 'express-rate-limit';
+import { env } from '../config/env';
+import { HttpError } from '../middleware/errors';
+import { requireAuth } from '../middleware/auth';
+import { register,login,token,cookieName,cookieOptions } from '../services/auth';
+export const auth=Router();
+auth.use((req,res,next)=>{res.set('Cache-Control','no-store'); if(req.method!=='GET' && req.get('origin')!==env.corsOrigin) return next(new HttpError(403,'ORIGIN_DENIED','Origin not allowed')); next();});
+const limiter=rateLimit({windowMs:15*60*1000,limit:20,standardHeaders:'draft-7',legacyHeaders:false,handler:(_req,_res,next)=>next(new HttpError(429,'RATE_LIMIT','Too many attempts. Try again later.'))});
+auth.post('/register',limiter,async(req,res)=>{const user=await register(req.body);res.cookie(cookieName,token(user.id),{...cookieOptions,maxAge:3600000}).status(201).json({user});});
+auth.post('/login',limiter,async(req,res)=>{const user=await login(req.body);res.cookie(cookieName,token(user.id),{...cookieOptions,maxAge:3600000}).json({user});});
+auth.post('/logout',(_req,res)=>{res.clearCookie(cookieName,cookieOptions).status(204).end();});
+auth.get('/me',requireAuth,(_req,res)=>{res.json({user:res.locals.user});});

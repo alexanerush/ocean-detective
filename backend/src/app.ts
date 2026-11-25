@@ -1,0 +1,18 @@
+import { analyses } from "./routes/analyses";
+import { uploads } from './routes/uploads';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
+import { auth } from './routes/auth';
+import path from 'node:path';
+import { env } from './config/env';
+import { requestLog } from './middleware/requestLog';
+import { errorHandler,HttpError } from './middleware/errors';
+import { projectRoot } from './services/research';
+import { api } from './routes/api';
+export const app=express();
+app.disable('x-powered-by');app.use(requestLog);app.use(helmet({crossOriginResourcePolicy:{policy:'cross-origin'}}));app.use(cors({origin:env.corsOrigin,credentials:true}));app.use(cookieParser());app.use(express.json({limit:'1mb'}));
+app.use('/results',express.static(path.join(projectRoot,'results')));
+app.get('/',(req,res)=>{res.json({project:'Ocean Detective',message:'Backend API is running'});});
+app.use('/api/auth',auth);app.use('/api/images',uploads);app.use('/api/analyses',analyses);app.use('/api',api);app.use((req,res,next)=>next(new HttpError(404,'NOT_FOUND','Route not found')));app.use(errorHandler);

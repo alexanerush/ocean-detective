@@ -1,0 +1,21 @@
+import { Router } from 'express';
+import multer from 'multer';
+import { mkdirSync } from 'node:fs';
+import { randomUUID } from 'node:crypto';
+import { rateLimit } from 'express-rate-limit';
+import { requireAuth } from '../middleware/auth';
+import { HttpError } from '../middleware/errors';
+import { env } from '../config/env';
+import { storageRoot,maxBytes,saveUpload,listUploads } from '../services/uploads';
+mkdirSync(storageRoot,{recursive:true,mode:0o700});
+const upload=multer({storage:multer.diskStorage({destination:storageRoot,filename:(_req,_file,cb)=>cb(null,randomUUID()+'.tif')}),limits:{fileSize:maxBytes,files:1,fields:0,parts:2}}).single('image');
+export const uploads=Router();
+uploads.use(requireAuth,(_req,res,next)=>{res.set('Cache-Control','no-store');next();});
+let busy=false;
+uploads.post('/',rateLimit({windowMs:60000,limit:10}), (req,res,next)=>{
+ if(req.get('origin')!==env.corsOrigin)return next(new HttpError(403,'ORIGIN_DENIED','Origin not allowed'));
+ if(busy)return next(new HttpError(429,'UPLOAD_BUSY','Another upload is being processed'));
+ busy=true;
+ upload(req,res,async(error)=>{try{if(error)throw new HttpError(error.code==='LIMIT_FILE_SIZE'?413:400,'UPLOAD_ERROR','Invalid upload or file exceeds 25 MiB');if(!req.file)throw new HttpError(400,'FILE_REQUIRED','Select an image');res.status(201).json({image:await saveUpload(res.locals.user.id,req.file)});}catch(e){next(e);}finally{busy=false;}});
+});
+uploads.get('/',async(req,res)=>{const page=Number(req.query.page??0);if(!Number.isSafeInteger(page)||page<0||page>10000)throw new HttpError(400,'INVALID_PAGE','Invalid page');const result=await listUploads(res.locals.user.id,page);res.json({items:result.rows,total:result.count});});

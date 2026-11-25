@@ -1,0 +1,113 @@
+.od-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.od-dashboard-heading h2 {
+  margin: 12px 0;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.2;
+  color: var(--od-text);
+}
+
+.od-dashboard-heading p {
+  margin: 0;
+  max-width: 680px;
+  color: var(--od-muted);
+  line-height: 1.7;
+}
+
+.od-dashboard-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.od-dashboard-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  background: var(--od-surface);
+  border: 1px solid var(--od-border);
+  border-radius: 18px;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.od-dashboard-card:hover {
+  border-color: rgba(94, 193, 190, 0.35);
+}
+
+.od-card-number {
+  color: var(--od-accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.od-dashboard-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--od-text);
+}
+
+.od-dashboard-card p {
+  margin: 0;
+  color: var(--od-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.od-dashboard-link {
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--od-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.od-dashboard-link:hover {
+  text-decoration: underline;
+}
+
+.od-dashboard-link:focus-visible {
+  outline: 2px solid var(--od-accent);
+  outline-offset: 4px;
+}
+
+.od-dashboard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.od-dashboard-tags span {
+  padding: 7px 12px;
+  border: 1px solid rgba(94, 193, 190, 0.2);
+  border-radius: 20px;
+  background: rgba(94, 193, 190, 0.06);
+  color: var(--od-accent);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1100px) {
+  .od-dashboard-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .od-dashboard-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .od-dashboard-card {
+    padding: 20px;
+  }
+}

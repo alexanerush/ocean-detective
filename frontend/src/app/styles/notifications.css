@@ -1,0 +1,27 @@
+.od-toast-region {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  max-width: calc(100% - 2rem);
+}
+.od-toast {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--od-surface);
+  color: var(--od-text);
+  border: 1px solid var(--od-control-border);
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px #0003;
+}
+.od-toast button {
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--od-border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}

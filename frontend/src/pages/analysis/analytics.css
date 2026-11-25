@@ -1,0 +1,77 @@
+.od-analytics {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.od-analytics p {
+  color: var(--od-muted);
+}
+.od-analytics-error {
+  color: var(--od-error) !important;
+}
+.od-metrics,
+.od-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+}
+.od-metrics div {
+  border: 1px solid var(--od-border);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+.od-metrics dt {
+  color: var(--od-muted);
+}
+.od-metrics dd {
+  margin: 0.4rem 0 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.od-chart,
+.od-result-image {
+  margin: 0;
+  min-width: 0;
+}
+.od-chart figcaption,
+.od-result-image figcaption {
+  font-weight: 600;
+  margin: 0.75rem 0;
+}
+.od-chart-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.3rem 0;
+}
+.od-chart-row meter {
+  width: 100%;
+  accent-color: var(--od-accent);
+}
+.od-result-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.5rem;
+}
+.od-log {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 20rem;
+  overflow: auto;
+}
+.od-table-scroll {
+  overflow-x: auto;
+}
+.od-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.od-table-scroll th,
+.od-table-scroll td {
+  text-align: left;
+  padding: 0.65rem;
+  border-bottom: 1px solid var(--od-border);
+}

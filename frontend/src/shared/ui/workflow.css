@@ -1,0 +1,76 @@
+.od-workflow {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.od-workflow p {
+  color: var(--od-muted);
+}
+.od-workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 1rem;
+}
+.od-workflow label,
+.od-comparison label {
+  display: grid;
+  gap: 0.5rem;
+}
+.od-workflow select {
+  font: inherit;
+  min-height: 44px;
+  max-width: 100%;
+  background: var(--od-surface);
+  color: var(--od-text);
+  border: 1px solid var(--od-control-border);
+  border-radius: 0.6rem;
+  padding: 0.5rem;
+}
+.od-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.od-workflow a {
+  color: var(--od-accent);
+}
+.od-workflow .od-table-scroll {
+  overflow: auto;
+}
+.od-workflow table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.od-workflow td,
+.od-workflow th {
+  text-align: left;
+  padding: 0.65rem;
+  border-bottom: 1px solid var(--od-border);
+}
+.od-comparison {
+  margin: 0 0 1rem;
+}
+.od-comparison-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+.od-comparison-stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.od-comparison-stage img + img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.od-comparison input {
+  width: 100%;
+  min-height: 44px;
+  accent-color: var(--od-accent);
+}

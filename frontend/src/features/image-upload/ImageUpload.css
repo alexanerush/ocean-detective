@@ -1,0 +1,124 @@
+.od-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--od-surface);
+  border: 1px solid var(--od-border);
+  border-radius: 18px;
+}
+
+.od-upload h3 {
+  margin: 0;
+  font-size: 1.375rem;
+  color: var(--od-text);
+}
+
+.od-upload p {
+  margin: 0;
+  color: var(--od-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.od-upload-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 220px;
+  padding: 24px;
+  border: 1px dashed var(--od-control-border);
+  border-radius: 14px;
+  background: rgba(94, 193, 190, 0.03);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.od-upload-area:hover,
+.od-upload-area:focus-within {
+  background: rgba(94, 193, 190, 0.08);
+  border-color: var(--od-accent);
+}
+
+.od-upload-area:focus-within {
+  outline: 2px solid var(--od-accent);
+  outline-offset: 3px;
+}
+
+.od-upload-area input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.od-upload-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: rgba(94, 193, 190, 0.1);
+  color: var(--od-accent);
+  font-size: 1.75rem;
+}
+
+.od-upload-area strong {
+  color: var(--od-text);
+  font-size: 1rem;
+}
+
+.od-upload-area > span:not(.od-upload-icon) {
+  color: var(--od-muted);
+  font-size: 0.8125rem;
+}
+
+.od-upload-file {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(94, 193, 190, 0.06);
+  border: 1px solid rgba(94, 193, 190, 0.2);
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.od-upload-file strong {
+  color: var(--od-text);
+  font-size: 0.875rem;
+}
+
+.od-upload-valid {
+  color: var(--od-success);
+  font-size: 0.75rem;
+}
+
+.od-upload-error {
+  padding: 14px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 10px;
+  color: var(--od-error);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 600px) {
+  .od-upload {
+    padding: 16px;
+  }
+
+  .od-upload-area {
+    min-height: 180px;
+  }
+}

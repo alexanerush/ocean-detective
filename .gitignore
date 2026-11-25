@@ -61,3 +61,26 @@ results/validation_rgb_prediction.png
 results/validation_multispectral_prediction.png
 results/validation_rgb_error.png
 results/validation_multispectral_error.png
+/private-uploads/
+
+/private-analyses/
+
+# Generated files
+/frontend/.lighthouseci/
+/frontend/coverage/
+/frontend/playwright-report/
+/frontend/reports/
+/frontend/test-results/
+/results/multiclass_demo/
+/Ocean_Detective_Final.pdf
+
+# Generated reports and private artifacts
+/frontend/.lighthouseci/
+/frontend/coverage/
+/frontend/playwright-report/
+/frontend/reports/
+/frontend/test-results/
+/results/multiclass_demo/
+/Ocean_Detective_Final.pdf
+/private-uploads/
+/private-analyses/

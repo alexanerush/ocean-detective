@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { requireAuth } from '../middleware/auth';
+import { HttpError } from '../middleware/errors';
+import { env } from '../config/env';
+import { runAnalysis, ownedAnalysis, artifactPath, listAnalyses, artifacts } from '../services/analyses';
+export const analyses=Router();
+analyses.use(requireAuth,(_req,res,next)=>{res.set('Cache-Control','no-store');next();});
+analyses.post('/',async(req,res)=>{if(req.get('origin')!==env.corsOrigin)throw new HttpError(403,'ORIGIN_DENIED','Origin not allowed');if(req.body?.confirmed!==true)throw new HttpError(422,'BANDS_REQUIRED','Confirm MARIDA compatibility');res.status(201).json(await runAnalysis(res.locals.user.id,String(req.body.imageId??'')));});
+analyses.get('/',async(req,res)=>{res.json(await listAnalyses(res.locals.user.id,String(req.query.imageId??'')));});
+analyses.get('/:id',async(req,res)=>{const row=await ownedAnalysis(res.locals.user.id,String(req.params.id));res.json(row.get({plain:true}));});
+analyses.get('/:id/files/:name',async(req,res)=>{const name=String(req.params.name);if(!artifacts.includes(name))throw new HttpError(404,'NOT_FOUND','Artifact not found');const row=await ownedAnalysis(res.locals.user.id,String(req.params.id));res.sendFile(artifactPath(row,name));});

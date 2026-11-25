@@ -1,7 +1,7 @@
 :root {
   font-family: Inter, Arial, sans-serif;
-  color: #e8f1f2;
-  background: #071417;
+  color: var(--od-text);
+  background: var(--od-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -16,7 +16,7 @@ body {
   min-height: 100vh;
   background:
     radial-gradient(circle at 80% 10%, rgba(35, 110, 117, 0.18), transparent 35%),
-    #071417;
+    var(--od-bg);
 }
 
 button {
@@ -42,8 +42,8 @@ button {
 .eyebrow {
   display: block;
   margin-bottom: 14px;
-  color: #65c6c4;
-  font-size: 12px;
+  color: var(--od-accent);
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -59,8 +59,8 @@ h1 {
 .header p {
   max-width: 570px;
   margin: 24px 0 0;
-  color: #8fa8aa;
-  font-size: 17px;
+  color: var(--od-muted);
+  font-size: 1.0625rem;
   line-height: 1.6;
 }
 
@@ -69,10 +69,10 @@ h1 {
   align-items: center;
   gap: 10px;
   padding: 10px 15px;
-  border: 1px solid #1c3a3e;
+  border: 1px solid var(--od-border);
   border-radius: 100px;
-  color: #9eb8ba;
-  font-size: 13px;
+  color: var(--od-muted);
+  font-size: 0.8125rem;
   white-space: nowrap;
 }
 
@@ -102,14 +102,14 @@ h1 {
 
 .step {
   color: #52777a;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.16em;
 }
 
 h2 {
   margin: 10px 0 26px;
-  font-size: 24px;
+  font-size: 1.5rem;
   letter-spacing: -0.02em;
 }
 
@@ -135,17 +135,17 @@ h2 {
   border: 1px solid #2e6469;
   border-radius: 50%;
   color: #67cbc8;
-  font-size: 26px;
+  font-size: 1.625rem;
 }
 
 .upload-area strong {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .upload-area span {
   margin-top: 8px;
   color: #668689;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .upload-area button {
@@ -185,7 +185,7 @@ h2 {
   max-width: 300px;
   margin: 10px 0 0;
   color: #526f72;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.5;
 }
 
@@ -209,13 +209,13 @@ h2 {
   display: block;
   margin-bottom: 8px;
   color: #52777a;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
 
 .info-card strong {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 /* RESPONSIVE */
@@ -255,7 +255,7 @@ h2 {
   background: #dce9e8;
   color: #092024;
 
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
 
   cursor: pointer;
@@ -309,7 +309,7 @@ h2 {
   border: 1px solid #285156;
   border-radius: 100px;
   color: #67d7a3;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -346,13 +346,13 @@ h2 {
   display: block;
   margin-bottom: 6px;
   color: #52777a;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
 
 .result-card > strong {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .metrics-grid {
@@ -373,13 +373,13 @@ h2 {
   display: block;
   margin-bottom: 7px;
   color: #52777a;
-  font-size: 9px;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
 
 .metric strong {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 @media (max-width: 800px) {
@@ -425,12 +425,12 @@ h2 {
 .comparison-heading h3,
 .log-header h3 {
   margin: 7px 0 0;
-  font-size: 17px;
+  font-size: 1.0625rem;
 }
 
 .comparison-heading > span {
-  color: #65c6c4;
-  font-size: 12px;
+  color: var(--od-accent);
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -482,17 +482,16 @@ h2 {
 
 .comparison-controls span {
   color: #668689;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
 
 .comparison-controls input {
   width: 100%;
-  accent-color: #65c6c4;
+  accent-color: var(--od-accent);
   cursor: pointer;
 }
-
 
 /* -------------------------
    ANALYSIS LOG
@@ -518,7 +517,7 @@ h2 {
   border: 1px solid #285156;
   border-radius: 100px;
   color: #67d7a3;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -526,9 +525,9 @@ h2 {
 .log-lines {
   display: grid;
   gap: 10px;
-  color: #8fa8aa;
+  color: var(--od-muted);
   font-family: monospace;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .log-lines div {
@@ -599,7 +598,7 @@ h2 {
   border: 1px solid rgba(88, 199, 194, 0.35);
   border-radius: 999px;
 
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.12em;
 
@@ -636,7 +635,7 @@ h2 {
 }
 
 .statistics-label {
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.15em;
 
@@ -652,7 +651,7 @@ h2 {
 
   color: #67d7d0;
 
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
 }
 
@@ -673,7 +672,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
 
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .distribution-info span {
@@ -748,7 +747,7 @@ h2 {
 
   color: #668689;
 
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.6;
 }
 
@@ -758,9 +757,9 @@ h2 {
   border: 1px solid #285156;
   border-radius: 100px;
 
-  color: #65c6c4;
+  color: var(--od-accent);
 
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -789,7 +788,7 @@ h2 {
 
   color: #52777a;
 
-  font-size: 9px;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
@@ -799,13 +798,13 @@ h2 {
 
   margin-bottom: 7px;
 
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .model-summary-card small {
   color: #668689;
 
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.4;
 }
 
@@ -828,12 +827,11 @@ h2 {
 .model-card-highlight {
   border-color: rgba(101, 198, 196, 0.42);
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(101, 198, 196, 0.08),
-      rgba(6, 19, 22, 0.95) 45%
-    );
+  background: linear-gradient(
+    145deg,
+    rgba(101, 198, 196, 0.08),
+    rgba(6, 19, 22, 0.95) 45%
+  );
 }
 
 .model-card-header {
@@ -847,7 +845,7 @@ h2 {
 .model-label {
   color: #52777a;
 
-  font-size: 9px;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
@@ -855,7 +853,7 @@ h2 {
 .model-card h3 {
   margin: 6px 0 0;
 
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 .feature-count {
@@ -864,9 +862,9 @@ h2 {
   border: 1px solid #285156;
   border-radius: 6px;
 
-  color: #65c6c4;
+  color: var(--od-accent);
 
-  font-size: 9px;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.1em;
 }
@@ -879,7 +877,7 @@ h2 {
   color: #668689;
 
   font-family: monospace;
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.55;
 }
 
@@ -906,13 +904,13 @@ h2 {
 
   color: #52777a;
 
-  font-size: 8px;
+  font-size: 0.5rem;
   font-weight: 700;
   letter-spacing: 0.13em;
 }
 
 .model-metrics strong {
-  font-size: 20px;
+  font-size: 1.25rem;
   letter-spacing: -0.03em;
 }
 
@@ -938,7 +936,7 @@ h2 {
   color: #789699;
 
   font-family: monospace;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 
 .experiment-conclusion {
@@ -961,7 +959,7 @@ h2 {
 
   margin: 7px 0 0;
 
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.4;
 }
 
@@ -978,7 +976,7 @@ h2 {
 
   color: #52777a;
 
-  font-size: 9px;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.13em;
 }
@@ -986,7 +984,7 @@ h2 {
 .improvement-value strong {
   color: #67d7a3;
 
-  font-size: 28px;
+  font-size: 1.75rem;
   letter-spacing: -0.04em;
 }
 
@@ -1012,13 +1010,13 @@ h2 {
 .model-visualization-header h3 {
   margin: 6px 0 0;
 
-  font-size: 17px;
+  font-size: 1.0625rem;
 }
 
 .model-visualization-header > span {
   color: #52777a;
 
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 
 .model-visualization img {
@@ -1055,16 +1053,16 @@ h2 {
 
   color: #52777a;
 
-  font-size: 8px;
+  font-size: 0.5rem;
   font-weight: 700;
   letter-spacing: 0.13em;
 }
 
 .experiment-details strong {
-  color: #9eb8ba;
+  color: var(--od-muted);
 
   font-family: monospace;
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.5;
 }
 

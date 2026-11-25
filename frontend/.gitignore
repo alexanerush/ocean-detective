@@ -22,3 +22,35 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.env
+.env.local
+.env.*.local
+cd ~/Desktop/ocean-detective
+
+cat >> .gitignore <<'EOF'
+
+# Local backups
+/frontend_backup/
+/backend_src_backup/
+
+# Environment secrets
+.env.*
+!.env.example
+
+# Generated frontend reports
+/frontend/.lighthouseci/
+/frontend/coverage/
+/frontend/playwright-report/
+/frontend/reports/
+/frontend/test-results/
+
+# Local ML experiments
+/results/multiclass_demo/
+
+# Local documentation
+/Ocean_Detective_Final.pdf
+
+# Private user data
+/private-analyses/
+/private-uploads/
+EOF
