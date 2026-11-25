@@ -1,3 +1,6 @@
+import swaggerUi from 'swagger-ui-express';
+import { readFileSync } from 'node:fs';
+import { parse } from 'yaml';
 import { analyses } from "./routes/analyses";
 import { uploads } from './routes/uploads';
 import express from 'express';
@@ -15,4 +18,30 @@ export const app=express();
 app.disable('x-powered-by');app.use(requestLog);app.use(helmet({crossOriginResourcePolicy:{policy:'cross-origin'}}));app.use(cors({origin:env.corsOrigin,credentials:true}));app.use(cookieParser());app.use(express.json({limit:'1mb'}));
 app.use('/results',express.static(path.join(projectRoot,'results')));
 app.get('/',(req,res)=>{res.json({project:'Ocean Detective',message:'Backend API is running'});});
+
+const openapi = parse(
+  readFileSync(
+    path.join(__dirname, '../docs/openapi.yaml'),
+    'utf8'
+  )
+);
+
+app.get('/api/openapi.json', (_req, res) => {
+  res.json(openapi);
+});
+
+app.use(
+  '/api/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(openapi, {
+    customSiteTitle: 'Ocean Detective API Documentation',
+    swaggerOptions: {
+      persistAuthorization: false,
+      displayRequestDuration: true,
+      docExpansion: 'list',
+      filter: true
+    }
+  })
+);
+
 app.use('/api/auth',auth);app.use('/api/images',uploads);app.use('/api/analyses',analyses);app.use('/api',api);app.use((req,res,next)=>next(new HttpError(404,'NOT_FOUND','Route not found')));app.use(errorHandler);

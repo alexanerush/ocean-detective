@@ -370,3 +370,22 @@ The author led the project development, made technical
 decisions and conducted experimental evaluation.
 All reported research metrics are based on actual
 experiments.
+
+## API Documentation
+
+The REST API is documented using OpenAPI 3.0.3.
+
+- [OpenAPI specification](backend/docs/openapi.yaml)
+- [Getting Started Guide](backend/docs/GETTING-STARTED.md)
+- [Integration Tutorial](backend/docs/INTEGRATION-TUTORIAL.md)
+
+Interactive documentation is available after starting
+the backend:
+
+- Swagger UI: http://localhost:3000/api/docs/
+- OpenAPI JSON: http://localhost:3000/api/openapi.json
+
+Validate the API specification:
+
+    cd backend
+    npm run docs:validate

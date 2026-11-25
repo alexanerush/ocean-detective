@@ -1,0 +1,2438 @@
+openapi: 3.0.3
+info:
+  title: Ocean Detective API
+  version: 1.0.0
+  description: Marine debris research and authenticated satellite image analysis.
+    Examples are illustrative except recorded research and inference results. Protected
+    requests use a session cookie. Write requests require the configured frontend
+    Origin.
+servers:
+- url: http://localhost:3000
+paths:
+  /:
+    get:
+      tags:
+      - Service
+      summary: Service information
+      operationId: get_root
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - project
+                - message
+                properties:
+                  project:
+                    type: string
+                  message:
+                    type: string
+              example:
+                project: Ocean Detective
+                message: Backend API is running
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security: []
+      parameters: []
+  /api/health:
+    get:
+      tags:
+      - Service
+      summary: Database health
+      operationId: get_api_health
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                - service
+                - database
+                properties:
+                  status:
+                    type: string
+                  service:
+                    type: string
+                  database:
+                    type: string
+              example:
+                status: ok
+                service: ocean-detective-backend
+                database: connected
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '503':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                - message
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: error
+                message: Database unavailable
+      security: []
+      parameters: []
+  /api/analyze:
+    post:
+      tags:
+      - Research
+      summary: Inspect bundled MARIDA sample (not user inference)
+      operationId: post_api_analyze
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleAnalysis'
+              example:
+                status: success
+                message: Satellite image analysis completed
+                analysis:
+                  image:
+                    width: 256
+                    height: 256
+                    bands: 11
+                    crs: EPSG:32618
+                  marine_debris_pixels: 27
+                  classes:
+                    '0': 65332
+                    '1': 27
+                    '5': 32
+                    '7': 76
+                    '11': 67
+                    '15': 2
+                  confidence:
+                    '0': 65332
+                    '1': 185
+                    '2': 11
+                    '3': 8
+                output: Example console output
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Invalid JSON
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '413':
+          description: Request too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Request too large
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '409':
+          description: Sample analysis already running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: SAMPLE_BUSY
+                    message: Sample analysis already running
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security: []
+      parameters: []
+  /api/model-comparison:
+    get:
+      tags:
+      - Research
+      summary: Read validation experiment
+      operationId: get_api_model_comparison
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelComparison'
+              example:
+                status: success
+                experiment:
+                  name: RGB vs Multispectral Random Forest
+                  dataset: MARIDA
+                  split: validation
+                  target_class: Marine Debris
+                results:
+                  experiment: RGB vs multispectral Random Forest
+                  dataset: MARIDA
+                  split:
+                    train_patches: 694
+                    validation_patches: 328
+                    test_patches: 359
+                    test_used: false
+                  features:
+                    rgb:
+                    - B02
+                    - B03
+                    - B04
+                    multispectral:
+                    - B01
+                    - B02
+                    - B03
+                    - B04
+                    - B05
+                    - B06
+                    - B07
+                    - B08
+                    - B8A
+                    - B11
+                    - B12
+                  random_forest:
+                    n_estimators: 100
+                    max_depth: 20
+                    min_samples_leaf: 2
+                    class_weight: balanced
+                    random_state: 42
+                    n_jobs: -1
+                  validation:
+                    rgb:
+                      precision: 0.10124610591900311
+                      recall: 0.12093023255813953
+                      f1: 0.11021619330224672
+                      iou: 0.05832211754149843
+                      true_positive: 130
+                      false_positive: 1154
+                      false_negative: 945
+                      training_seconds: 9.01452898979187
+                    multispectral:
+                      precision: 0.8046471600688468
+                      recall: 0.8697674418604651
+                      f1: 0.8359409924005364
+                      iou: 0.7181259600614439
+                      true_positive: 935
+                      false_positive: 227
+                      false_negative: 140
+                      training_seconds: 16.855019092559814
+                visualization: /results/validation_model_comparison.png
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security: []
+      parameters: []
+  /api/auth/register:
+    post:
+      tags:
+      - Authentication
+      summary: Register
+      operationId: post_api_auth_register
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example: &id001
+                user:
+                  id: '1'
+                  email: developer@example.com
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+            Set-Cookie:
+              schema:
+                type: string
+              description: od_session JWT, HttpOnly, SameSite=Lax, Path=/api, lifetime
+                one hour; Secure in production
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '403':
+          description: Origin not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: ORIGIN_DENIED
+                    message: Origin not allowed
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid JSON / Email and password are required / Enter a valid
+            email and a password of 12–128 characters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Invalid JSON
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: INVALID_INPUT
+                    message: Email and password are required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: INVALID_INPUT
+                    message: Enter a valid email and a password of 12–128 characters
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '413':
+          description: Request too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Request too large
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '429':
+          description: Too many attempts. Try again later.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: RATE_LIMIT
+                    message: Too many attempts. Try again later.
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '409':
+          description: Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: EMAIL_EXISTS
+                    message: Email already registered
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security: []
+      parameters:
+      - name: Origin
+        in: header
+        required: true
+        schema:
+          type: string
+        example: http://localhost:5173
+        description: Must match configured CORS_ORIGIN. Browser sets this automatically.
+      requestBody: &id002
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                password:
+                  type: string
+                  minLength: 12
+                  maxLength: 128
+                  format: password
+            example:
+              email: developer@example.com
+              password: <your-local-password>
+  /api/auth/login:
+    post:
+      tags:
+      - Authentication
+      summary: Login
+      operationId: post_api_auth_login
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example: *id001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+            Set-Cookie:
+              schema:
+                type: string
+              description: od_session JWT, HttpOnly, SameSite=Lax, Path=/api, lifetime
+                one hour; Secure in production
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '403':
+          description: Origin not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: ORIGIN_DENIED
+                    message: Origin not allowed
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid JSON / Email and password are required / Enter a valid
+            email and a password of 12–128 characters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Invalid JSON
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: INVALID_INPUT
+                    message: Email and password are required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: INVALID_INPUT
+                    message: Enter a valid email and a password of 12–128 characters
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '413':
+          description: Request too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Request too large
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '429':
+          description: Too many attempts. Try again later.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: RATE_LIMIT
+                    message: Too many attempts. Try again later.
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Invalid email or password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_CREDENTIALS
+                    message: Invalid email or password
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security: []
+      parameters:
+      - name: Origin
+        in: header
+        required: true
+        schema:
+          type: string
+        example: http://localhost:5173
+        description: Must match configured CORS_ORIGIN. Browser sets this automatically.
+      requestBody: *id002
+  /api/auth/logout:
+    post:
+      tags:
+      - Authentication
+      summary: Clear session cookie
+      operationId: post_api_auth_logout
+      responses:
+        '204':
+          description: No content
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+            Set-Cookie:
+              schema:
+                type: string
+              description: Clears od_session
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '403':
+          description: Origin not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: ORIGIN_DENIED
+                    message: Origin not allowed
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Invalid JSON
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '413':
+          description: Request too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Request too large
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security: []
+      parameters:
+      - name: Origin
+        in: header
+        required: true
+        schema:
+          type: string
+        example: http://localhost:5173
+        description: Must match configured CORS_ORIGIN. Browser sets this automatically.
+  /api/auth/me:
+    get:
+      tags:
+      - Authentication
+      summary: Current user
+      operationId: get_api_auth_me
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example: *id001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Sign in required / Session expired or invalid / Invalid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Sign in required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Session expired or invalid
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Invalid session
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security:
+      - session: []
+      parameters: []
+  /api/images:
+    post:
+      tags:
+      - Images
+      summary: Upload GeoTIFF
+      operationId: post_api_images
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - image
+                properties:
+                  image:
+                    $ref: '#/components/schemas/SatelliteImage'
+              example:
+                image: &id003
+                  image_id: '1'
+                  original_filename: sample.tif
+                  file_size_bytes: '2883584'
+                  width_pixels: 256
+                  height_pixels: 256
+                  band_count: 11
+                  uploaded_at: '2026-01-01T12:00:00Z'
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Sign in required / Session expired or invalid / Invalid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Sign in required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Session expired or invalid
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Invalid session
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '403':
+          description: Origin not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: ORIGIN_DENIED
+                    message: Origin not allowed
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid upload or file exceeds 25 MiB / Select an image / Invalid
+            JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UPLOAD_ERROR
+                    message: Invalid upload or file exceeds 25 MiB
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: FILE_REQUIRED
+                    message: Select an image
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Invalid JSON
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '413':
+          description: Invalid upload or file exceeds 25 MiB / Request too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UPLOAD_ERROR
+                    message: Invalid upload or file exceeds 25 MiB
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Request too large
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '415':
+          description: Only nonempty GeoTIFF files are accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_FILE
+                    message: Only nonempty GeoTIFF files are accepted
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '422':
+          description: Invalid GeoTIFF or raster exceeds limits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_RASTER
+                    message: Invalid GeoTIFF or raster exceeds limits
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '503':
+          description: Raster validation unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: VALIDATOR_FAILED
+                    message: Raster validation unavailable
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '429':
+          description: Another upload is being processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UPLOAD_BUSY
+                    message: Another upload is being processed
+                    requestId: 00000000-0000-4000-8000-000000000001
+            text/plain:
+              schema:
+                type: string
+              example: Too many requests, please try again later.
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security:
+      - session: []
+      parameters:
+      - name: Origin
+        in: header
+        required: true
+        schema:
+          type: string
+        example: http://localhost:5173
+        description: Must match configured CORS_ORIGIN. Browser sets this automatically.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - image
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: Nonempty georeferenced TIFF, <=25 MiB, dimensions <=1024
+                    x 1024, 1–11 bands, decoded size <=128 MiB.
+    get:
+      tags:
+      - Images
+      summary: List owned images (20 per page)
+      operationId: get_api_images
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - items
+                - total
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SatelliteImage'
+                  total:
+                    type: integer
+              example:
+                items:
+                - *id003
+                total: 1
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Sign in required / Session expired or invalid / Invalid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Sign in required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Session expired or invalid
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Invalid session
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_PAGE
+                    message: Invalid page
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security:
+      - session: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 10000
+          default: 0
+  /api/analyses:
+    post:
+      tags:
+      - Analyses
+      summary: Run synchronous ML inference (60-second inference timeout)
+      operationId: post_api_analyses
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - analysis_id
+                - status
+                properties:
+                  analysis_id:
+                    type: string
+                  status:
+                    type: string
+              example:
+                analysis_id: '1'
+                status: COMPLETED
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Invalid storage reference / Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: STORAGE_ERROR
+                    message: Invalid storage reference
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Sign in required / Session expired or invalid / Invalid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Sign in required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Session expired or invalid
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Invalid session
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '403':
+          description: Origin not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: ORIGIN_DENIED
+                    message: Origin not allowed
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid identifier / Invalid JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_ID
+                    message: Invalid identifier
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Invalid JSON
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Image not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '413':
+          description: Request too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_REQUEST
+                    message: Request too large
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '422':
+          description: Confirm MARIDA compatibility / Exactly 11 MARIDA bands required
+            / Inference failed or exceeded 60 seconds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: BANDS_REQUIRED
+                    message: Confirm MARIDA compatibility
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: BANDS_REQUIRED
+                    message: Exactly 11 MARIDA bands required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: INFERENCE_FAILED
+                    message: Inference failed or exceeded 60 seconds
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '429':
+          description: Another analysis is running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: ANALYSIS_BUSY
+                    message: Another analysis is running
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '503':
+          description: Apply model catalog migration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: CATALOG_REQUIRED
+                    message: Apply model catalog migration
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security:
+      - session: []
+      parameters:
+      - name: Origin
+        in: header
+        required: true
+        schema:
+          type: string
+        example: http://localhost:5173
+        description: Must match configured CORS_ORIGIN. Browser sets this automatically.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - imageId
+              - confirmed
+              properties:
+                imageId: &id004
+                  type: string
+                  pattern: ^[1-9][0-9]{0,18}$
+                  description: Positive PostgreSQL BIGINT identifier, maximum 9223372036854775807
+                confirmed:
+                  type: boolean
+                  enum:
+                  - true
+                  description: Confirm MARIDA band order and reflectance preprocessing
+            example:
+              imageId: '1'
+              confirmed: true
+    get:
+      tags:
+      - Analyses
+      summary: List up to 100 analyses for owned image
+      operationId: get_api_analyses
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnalysisSummary'
+              example:
+              - analysis_id: '1'
+                status: COMPLETED
+                submitted_at: '2026-01-01T12:00:00Z'
+                completed_at: '2026-01-01T12:00:03Z'
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Sign in required / Session expired or invalid / Invalid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Sign in required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Session expired or invalid
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Invalid session
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid identifier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_ID
+                    message: Invalid identifier
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Image not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security:
+      - session: []
+      parameters:
+      - name: imageId
+        in: query
+        required: true
+        schema: *id004
+        example: '1'
+  /api/analyses/{id}:
+    get:
+      tags:
+      - Analyses
+      summary: Get owned analysis metadata
+      operationId: get_api_analyses_id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis'
+              example:
+                analysis_id: '1'
+                status: COMPLETED
+                submitted_at: '2026-01-01T12:00:00Z'
+                completed_at: '2026-01-01T12:00:03Z'
+                image_id: '1'
+                model_id: '1'
+                mask_storage_uri: 00000000-0000-4000-8000-000000000001/mask.tif
+                error_message: null
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Sign in required / Session expired or invalid / Invalid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Sign in required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Session expired or invalid
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Invalid session
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid identifier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_ID
+                    message: Invalid identifier
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '404':
+          description: Image not found / Analysis not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Image not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Analysis not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security:
+      - session: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema: *id004
+        example: '1'
+  /api/analyses/{id}/files/{name}:
+    get:
+      tags:
+      - Analyses
+      summary: Retrieve owned analysis artifact
+      operationId: get_api_analyses_id_files_name
+      responses:
+        '200':
+          description: PNG visualization, GeoTIFF raster or JSON summary, depending
+            on filename
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/tiff:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResult'
+              example:
+                model: Multispectral Random Forest
+                width: 256
+                height: 256
+                bands:
+                - B01
+                - B02
+                - B03
+                - B04
+                - B05
+                - B06
+                - B07
+                - B08
+                - B8A
+                - B11
+                - B12
+                crs: EPSG:32618
+                valid_pixels: 65536
+                nodata_pixels: 0
+                classes:
+                - class_id: 1
+                  pixel_count: 215
+                  mean_confidence: 0.5376944541931152
+                - class_id: 2
+                  pixel_count: 0
+                  mean_confidence: null
+                - class_id: 3
+                  pixel_count: 0
+                  mean_confidence: null
+                - class_id: 4
+                  pixel_count: 0
+                  mean_confidence: null
+                - class_id: 5
+                  pixel_count: 57
+                  mean_confidence: 0.7346920371055603
+                - class_id: 6
+                  pixel_count: 77
+                  mean_confidence: 0.3036051392555237
+                - class_id: 7
+                  pixel_count: 64425
+                  mean_confidence: 0.8171601891517639
+                - class_id: 8
+                  pixel_count: 0
+                  mean_confidence: null
+                - class_id: 9
+                  pixel_count: 1
+                  mean_confidence: 0.2157706618309021
+                - class_id: 10
+                  pixel_count: 141
+                  mean_confidence: 0.6027137637138367
+                - class_id: 11
+                  pixel_count: 274
+                  mean_confidence: 0.7103793621063232
+                - class_id: 12
+                  pixel_count: 0
+                  mean_confidence: null
+                - class_id: 13
+                  pixel_count: 154
+                  mean_confidence: 0.43954893946647644
+                - class_id: 14
+                  pixel_count: 103
+                  mean_confidence: 0.2794386148452759
+                - class_id: 15
+                  pixel_count: 89
+                  mean_confidence: 0.355148047208786
+                processing_seconds: 2.451
+                confidence_definition: Maximum Random Forest predict_proba; not calibrated
+                band_compatibility: User confirmed MARIDA order and preprocessing
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '401':
+          description: Sign in required / Session expired or invalid / Invalid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Sign in required
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Session expired or invalid
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: UNAUTHORIZED
+                    message: Invalid session
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '400':
+          description: Invalid identifier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INVALID_ID
+                    message: Invalid identifier
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '404':
+          description: Image not found / Analysis not found / Artifact not found /
+            Artifact unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Image not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '1':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Analysis not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '2':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Artifact not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+                '3':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Artifact unavailable
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security:
+      - session: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema: *id004
+        example: '1'
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - rgb.png
+          - segmentation.png
+          - overlay.png
+          - confidence.png
+          - mask.tif
+          - confidence.tif
+          - analysis.json
+          - confidence-values.png
+  /results/{name}:
+    get:
+      tags:
+      - Research
+      summary: Public research artifact (existing static file)
+      operationId: get_results_name
+      responses:
+        '200':
+          description: Static research file
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: INTERNAL_ERROR
+                    message: Internal server error
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+        '404':
+          description: Route not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                '0':
+                  value:
+                    status: error
+                    code: NOT_FOUND
+                    message: Route not found
+                    requestId: 00000000-0000-4000-8000-000000000001
+          headers:
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+              description: Request correlation identifier
+      security: []
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+        example: validation_model_comparison.png
+components:
+  securitySchemes:
+    session:
+      type: apiKey
+      in: cookie
+      name: od_session
+  schemas:
+    Error:
+      type: object
+      required:
+      - status
+      - code
+      - message
+      - requestId
+      properties:
+        status:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
+    SampleAnalysis:
+      type: object
+      required:
+      - status
+      - message
+      - analysis
+      - output
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        analysis:
+          type: object
+          required:
+          - image
+          - marine_debris_pixels
+          - classes
+          - confidence
+          properties:
+            image:
+              type: object
+              required:
+              - width
+              - height
+              - bands
+              - crs
+              properties:
+                width:
+                  type: integer
+                height:
+                  type: integer
+                bands:
+                  type: integer
+                crs:
+                  type: string
+            marine_debris_pixels:
+              type: integer
+            classes: &id005
+              type: object
+              additionalProperties:
+                type: integer
+                minimum: 0
+            confidence: *id005
+        output:
+          type: string
+    ModelComparison:
+      type: object
+      required:
+      - status
+      - experiment
+      - results
+      - visualization
+      properties:
+        status:
+          type: string
+        experiment:
+          type: object
+          required:
+          - name
+          - dataset
+          - split
+          - target_class
+          properties:
+            name:
+              type: string
+            dataset:
+              type: string
+            split:
+              type: string
+            target_class:
+              type: string
+        results:
+          type: object
+          required:
+          - experiment
+          - dataset
+          - split
+          - features
+          - random_forest
+          - validation
+          properties:
+            experiment:
+              type: string
+            dataset:
+              type: string
+            split:
+              type: object
+              required:
+              - train_patches
+              - validation_patches
+              - test_patches
+              - test_used
+              properties:
+                train_patches:
+                  type: integer
+                validation_patches:
+                  type: integer
+                test_patches:
+                  type: integer
+                test_used:
+                  type: boolean
+            features:
+              type: object
+              required:
+              - rgb
+              - multispectral
+              properties:
+                rgb:
+                  type: array
+                  items:
+                    type: string
+                multispectral:
+                  type: array
+                  items:
+                    type: string
+            random_forest:
+              type: object
+              required:
+              - n_estimators
+              - max_depth
+              - min_samples_leaf
+              - class_weight
+              - random_state
+              - n_jobs
+              properties:
+                n_estimators:
+                  type: integer
+                max_depth:
+                  type: integer
+                min_samples_leaf:
+                  type: integer
+                class_weight:
+                  type: string
+                random_state:
+                  type: integer
+                n_jobs:
+                  type: integer
+            validation:
+              type: object
+              required:
+              - rgb
+              - multispectral
+              properties:
+                rgb:
+                  type: object
+                  required:
+                  - precision
+                  - recall
+                  - f1
+                  - iou
+                  - true_positive
+                  - false_positive
+                  - false_negative
+                  - training_seconds
+                  properties:
+                    precision:
+                      type: number
+                    recall:
+                      type: number
+                    f1:
+                      type: number
+                    iou:
+                      type: number
+                    true_positive:
+                      type: integer
+                    false_positive:
+                      type: integer
+                    false_negative:
+                      type: integer
+                    training_seconds:
+                      type: number
+                multispectral:
+                  type: object
+                  required:
+                  - precision
+                  - recall
+                  - f1
+                  - iou
+                  - true_positive
+                  - false_positive
+                  - false_negative
+                  - training_seconds
+                  properties:
+                    precision:
+                      type: number
+                    recall:
+                      type: number
+                    f1:
+                      type: number
+                    iou:
+                      type: number
+                    true_positive:
+                      type: integer
+                    false_positive:
+                      type: integer
+                    false_negative:
+                      type: integer
+                    training_seconds:
+                      type: number
+        visualization:
+          type: string
+    UserResponse:
+      type: object
+      required:
+      - user
+      properties:
+        user:
+          type: object
+          required:
+          - id
+          - email
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+    SatelliteImage:
+      type: object
+      required:
+      - image_id
+      - original_filename
+      - file_size_bytes
+      - width_pixels
+      - height_pixels
+      - band_count
+      - uploaded_at
+      properties:
+        image_id:
+          type: string
+        original_filename:
+          type: string
+        file_size_bytes:
+          type: string
+        width_pixels:
+          type: integer
+        height_pixels:
+          type: integer
+        band_count:
+          type: integer
+        uploaded_at:
+          type: string
+    AnalysisSummary:
+      type: object
+      required:
+      - analysis_id
+      - status
+      - submitted_at
+      - completed_at
+      properties:
+        analysis_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - COMPLETED
+          - FAILED
+        submitted_at:
+          type: string
+        completed_at:
+          type: string
+          nullable: true
+    Analysis:
+      type: object
+      required:
+      - analysis_id
+      - status
+      - submitted_at
+      - completed_at
+      - image_id
+      - model_id
+      - mask_storage_uri
+      - error_message
+      properties:
+        analysis_id:
+          type: string
+        status:
+          type: string
+        submitted_at:
+          type: string
+        completed_at:
+          type: string
+          nullable: true
+        image_id:
+          type: string
+        model_id:
+          type: string
+        mask_storage_uri:
+          type: string
+          nullable: true
+        error_message:
+          type: string
+          nullable: true
+    InferenceResult:
+      type: object
+      required:
+      - model
+      - width
+      - height
+      - bands
+      - crs
+      - valid_pixels
+      - nodata_pixels
+      - classes
+      - processing_seconds
+      - confidence_definition
+      - band_compatibility
+      properties:
+        model:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        bands:
+          type: array
+          items:
+            type: string
+        crs:
+          type: string
+        valid_pixels:
+          type: integer
+        nodata_pixels:
+          type: integer
+        classes:
+          type: array
+          items:
+            type: object
+            required:
+            - class_id
+            - pixel_count
+            - mean_confidence
+            properties:
+              class_id:
+                type: integer
+              pixel_count:
+                type: integer
+              mean_confidence:
+                type: number
+                nullable: true
+        processing_seconds:
+          type: number
+        confidence_definition:
+          type: string
+        band_compatibility:
+          type: string

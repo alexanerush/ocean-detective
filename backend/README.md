@@ -407,3 +407,45 @@ Formal OpenAPI documentation, comprehensive
 automated backend testing, production monitoring
 and cloud deployment remain subsequent
 development tasks.
+
+## API Documentation
+
+The API specification follows the OpenAPI 3.0.3
+industry standard.
+
+### Developer Resources
+
+| Resource | Location |
+|---|---|
+| OpenAPI specification | [openapi.yaml](docs/openapi.yaml) |
+| Getting Started | [Getting Started Guide](docs/GETTING-STARTED.md) |
+| Integration tutorial | [Integration Tutorial](docs/INTEGRATION-TUTORIAL.md) |
+| Swagger UI | http://localhost:3000/api/docs/ |
+| OpenAPI JSON | http://localhost:3000/api/openapi.json |
+
+### Specification Validation
+
+    npm run docs:validate
+
+### Interactive Documentation
+
+    npm run dev
+
+Open http://localhost:3000/api/docs/ in a browser.
+
+The specification documents authentication,
+request parameters, request bodies, response models,
+HTTP status codes, error messages and examples.
+
+### Requirements Traceability
+
+| Requirement | Implementation |
+|---|---|
+| Industry-standard API specification | OpenAPI 3.0.3 |
+| Version-controlled YAML specification | docs/openapi.yaml |
+| Automated specification validation | scripts/validate-openapi.cjs |
+| Endpoint documentation and examples | docs/openapi.yaml |
+| Reusable data models | OpenAPI components/schemas |
+| Getting Started Guide | docs/GETTING-STARTED.md |
+| Step-by-step integration tutorial | docs/INTEGRATION-TUTORIAL.md |
+| Developer-accessible documentation | Swagger UI and Markdown |
