@@ -360,11 +360,13 @@ The application implements:
 - Large datasets and model binaries require local preparation.
 - Public cloud deployment is not yet available.
 
-## Use of AI Tools
+## AI Usage Disclosure
 
-AI-assisted development was used for architecture
-discussion, implementation support, debugging,
-testing assistance and documentation.
+AI tools were used as supplementary resources for
+technical consultation, troubleshooting, code review
+and documentation support.
 
-Reported experimental metrics are based on executed
-experiments rather than AI-generated estimates.
+The author led the project development, made technical
+decisions and conducted experimental evaluation.
+All reported research metrics are based on actual
+experiments.
